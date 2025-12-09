@@ -5,14 +5,20 @@ import Logo from './Logo';
 import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
 import { IoLogInOutline, IoPersonAddOutline } from "react-icons/io5";
+import UserDropdownMenu from './UserDropdownMenu';
+
+
 const Header = () => {
   const navigationLinks = [
     { id: 1, path: "/", pathName: "Home" },
     { id: 2, path: "/all-scholarships", pathName: "All Scholarships" }
   ]
-
+const user = {
+  displayName: "Abdur Rob",
+  photoURL: "https://i.pravatar.cc/150?img=3"
+};
   return (
-    <header className="bg-clr shadow-sm">
+    <header className="bg-clr py-3.5 shadow-sm">
       <Container className='navbar'>
         {/*//* DROPDOWN MENU & LOGO */}
         <div className="navbar-start">
@@ -52,17 +58,29 @@ const Header = () => {
 
         {/*//* LOGIN, LOGOUT & USER PROFILE */}
         <div className="navbar-end gap-3">
-          <PrimaryButton
-            path="/login"
-            buttonName="Login"
-            icon={IoLogInOutline}
-          />
+          {
+            user
+              ?
+              (
+                <>
+                  <PrimaryButton
+                    path="/login"
+                    buttonName="Login"
+                    icon={IoLogInOutline}
+                  />
 
-          <SecondaryButton
-            path="/register"
-            buttonName="Register"
-            icon={IoPersonAddOutline}
-          />
+                  <SecondaryButton
+                    path="/register"
+                    buttonName="Register"
+                    icon={IoPersonAddOutline}
+                  />
+                </>
+              )
+              :
+              (
+                <UserDropdownMenu user={user}></UserDropdownMenu>
+              )
+          }
         </div>
       </Container>
     </header>

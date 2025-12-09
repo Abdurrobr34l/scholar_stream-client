@@ -12,7 +12,7 @@ const MainLayout = () => {
       {/* </header> */}
 
     <Container>
-      {/* <main className='min-h-[calc(100vh-68px-403px)]'> */}
+      {/* <main className='min-h-[calc(100vh-100px-403px)]'> */}
       <main>
         <Outlet></Outlet>
       </main>
