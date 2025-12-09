@@ -10,14 +10,14 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #0F172A;
-  --color-primary-content: #0B5FFF;
+  --color-primary: #0f172a;
+  --color-primary-content: #0b5fff;
 
-  --color-secondary: #6B7280;
+  --color-secondary: #6b7280;
   /* --color-secondary-content: #; */
 
-  --color-accent: #F59E0B;
-  --color-accent-content: #06B6D4;
+  --color-accent: #f59e0b;
+  --color-accent-content: #06b6d4;
 }
 
 /** COMMON STYLING */
@@ -39,13 +39,13 @@ body {
 }
 
 .bg-clr {
-  @apply bg-[#F8FAFC]
+  @apply bg-[#F8FAFC];
 }
 
 /** NAVLINK STYLING */
 .navlink {
-  @apply p-0 font-semibold text-primary hover:text-accent hover:bg-transparent!
+  @apply p-0 font-semibold text-primary hover:text-accent hover:bg-transparent!;
 }
 .active {
-  @apply text-accent!
+  @apply text-accent!;
 }

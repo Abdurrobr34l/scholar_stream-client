@@ -1,12 +1,13 @@
 import React from "react";
+import Container from "./Container";
 import { Link } from "react-router";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import Logo from "./Logo";
 
 const Footer = () => {
   return (
-    <footer className="pt-10 pb-5 bg-linear-to-b from-[#0f172a] via-[#0f172af6] to-[#0f172ad0] text-white ">
-      <div className="container mx-auto px-4">
+    <footer className="pt-10 pb-5 bg-primary text-white ">
+      <Container>
         
         {/* Logo + Social Section */}
         <div className="flex flex-col items-center gap-4">
@@ -39,7 +40,7 @@ const Footer = () => {
           © {new Date().getFullYear()} <span className="text-accent">ScholarStream</span> — All rights reserved.
         </p>
 
-      </div>
+      </Container>
     </footer>
   );
 };

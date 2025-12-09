@@ -1,12 +1,13 @@
 import React from 'react';
+import PageTitle from '../../Utilities/PageTitle';
+import HeroSection from './HomeSections/HeroSection';
 
 const Home = () => {
   return (
     <div>
-      Home
-      Home
-      Home
-      Home
+      <PageTitle title="Home"></PageTitle>
+
+      <HeroSection></HeroSection>
     </div>
   );
 };
