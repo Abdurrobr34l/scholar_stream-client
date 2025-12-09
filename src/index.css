@@ -41,4 +41,11 @@ body {
 .bg-clr {
   @apply bg-[#F8FAFC]
 }
-/* body - inter */
+
+/** NAVLINK STYLING */
+.navlink {
+  @apply p-0 font-semibold text-primary hover:text-accent hover:bg-transparent!
+}
+.active {
+  @apply text-accent!
+}

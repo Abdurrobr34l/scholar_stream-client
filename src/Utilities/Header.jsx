@@ -1,7 +1,10 @@
 import React from 'react';
 import Container from './Container';
 import { NavLink } from 'react-router';
-
+import Logo from './Logo';
+import PrimaryButton from './PrimaryButton';
+import SecondaryButton from './SecondaryButton';
+import { IoLogInOutline, IoPersonAddOutline } from "react-icons/io5";
 const Header = () => {
   const navigationLinks = [
     { id: 1, path: "/", pathName: "Home" },
@@ -31,16 +34,16 @@ const Header = () => {
           </div>
 
           {/*//* Logo */}
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <Logo></Logo>
         </div>
 
         {/*//* NAVIGATION MENU */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal gap-6">
             {
               navigationLinks.map(({ id, path, pathName }) => (
                 <li key={id}>
-                  <NavLink to={path}>{pathName}</NavLink>
+                  <NavLink to={path} className="navlink">{pathName}</NavLink>
                 </li>
               ))
             }
@@ -48,8 +51,18 @@ const Header = () => {
         </div>
 
         {/*//* LOGIN, LOGOUT & USER PROFILE */}
-        <div className="navbar-end">
-          <a className="btn">Button</a>
+        <div className="navbar-end gap-3">
+          <PrimaryButton
+            path="/login"
+            buttonName="Login"
+            icon={IoLogInOutline}
+          />
+
+          <SecondaryButton
+            path="/register"
+            buttonName="Register"
+            icon={IoPersonAddOutline}
+          />
         </div>
       </Container>
     </header>
