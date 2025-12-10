@@ -6,6 +6,7 @@ import useAxios from "../../Hooks/useAxios";
 import { AuthContext } from "../../Context/AuthContext";
 import PageTitle from "../../Utilities/PageTitle";
 import SectionTitle from "../../Utilities/SectionTitle";
+import axios from "axios";
 
 const Register = () => {
   const { registerUser, updateUserProfile } = useContext(AuthContext);
@@ -14,48 +15,65 @@ const Register = () => {
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const onSubmit = async (data) => {
-    const { name, email, photoURL, password } = data;
+const onSubmit = async (data) => {
+  const { name, email, password, photo } = data;
 
-    try {
-      // 1️⃣ Register user with Firebase Auth
-      const userCredential = await registerUser(email, password);
-      const user = userCredential.user;
+  try {
+    // 1️⃣ Register user with Firebase Auth
+    const userCredential = await registerUser(email, password);
+    const user = userCredential.user;
 
-      // 2️⃣ Update Firebase profile
-      await updateUserProfile({ displayName: name, photoURL });
+    let photoURL = "";
 
-      // 3️⃣ Save user to your MongoDB via server
-      const userInfo = {
-        uid: user.uid,
-        name,
-        email,
-        photoURL: photoURL || "",
-        role: "Student", // default role
-        createdAt: new Date()
-      };
+    // 2️⃣ Upload image if user selected one
+    if (photo && photo[0]) {
+      const file = photo[0];
+      const formData = new FormData();
+      formData.append("image", file);
 
-      const res = await axiosSecure.post("/users", userInfo);
-      if (res.data.insertedId || res.data.message === "User Exists") {
-        toast.success("Registration successful!");
-      }
-
-      reset();
-      navigate("/login");
-    } catch (error) {
-      // Firebase error handling
-      if (error.code === "auth/email-already-in-use") {
-        toast.error("Email is already registered!");
-      } else {
-        toast.error(error.message || "Registration failed!");
-      }
+      const imgbbURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`;
+      const imgRes = await axios.post(imgbbURL, formData);
+      photoURL = imgRes.data.data.url; // get uploaded image URL
     }
-  };
+
+    // 3️⃣ Update Firebase profile
+    await updateUserProfile({ displayName: name, photoURL });
+
+    // 4️⃣ Save user to MongoDB via server
+    const userInfo = {
+      uid: user.uid,
+      name,
+      email,
+      photoURL,
+      role: "Student",
+      createdAt: new Date(),
+    };
+
+    const res = await axiosSecure.post("/users", userInfo);
+    if (res.data.insertedId || res.data.message === "User Exists") {
+      toast.success("Registration successful!");
+    }
+
+    reset();
+    navigate("/login");
+  } catch (error) {
+    if (error.code === "auth/email-already-in-use") {
+      toast.error("This email is already registered!");
+    } else if (error.code === "auth/invalid-email") {
+      toast.error("Please enter a valid email address.");
+    } else if (error.code === "auth/weak-password") {
+      toast.error("Your password is too weak.");
+    } else {
+      toast.error("Registration failed. Please try again.");
+    }
+  }
+};
+
 
   return (
     <section className="sectionPadding">
       <SectionTitle sectionName={<>Register <span className="text-accent-content">Now</span></>} />
-      
+
       <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
         <PageTitle title="Register" />
 
@@ -88,7 +106,7 @@ const Register = () => {
             type="file"
             placeholder="Photo URL (optional)"
             className="input input-bordered w-full"
-            {...register("photoURL")}
+            {...register("photo")}
           />
 
           {/* Password */}
