@@ -3,13 +3,12 @@ import notFoundImg from '../../assets/404.png';
 // import { HeadProvider } from 'react-head';
 import { Link } from 'react-router';
 import PrimaryButton from '../../Utilities/PrimaryButton';
+import PageTitle from '../../Utilities/PageTitle';
 
 const ErrorPage = () => {
   return (
     <>
-      {/* <HeadProvider> */}
-        <title>FinEase | Error Page</title>
-      {/* </HeadProvider> */}
+<PageTitle title="Error 404"/>
 
       <section className="flex flex-col items-center justify-center min-h-screen gap-6 py-10 text-center bg-white">
         {/* 404 Image */}

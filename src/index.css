@@ -61,3 +61,8 @@ body {
 .tooltip.tooltip-bottom:after {
   margin-top: 12px !important; 
 }
+
+/** FORM INPUT */
+input {
+  @apply py-5 border-secondary focus:outline-accent focus:border-accent;
+}
