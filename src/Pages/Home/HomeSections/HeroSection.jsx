@@ -1,9 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
 import Container from "../../../Utilities/Container";
+import { motion } from "framer-motion";
 import PrimaryButton from "../../../Utilities/PrimaryButton";
 import heroImage from "../../../assets/hero-image.png";
 import heroImageBG from "../../../assets/hero-image-bg.svg";
+import { FaBook, FaGlobe, FaTrophy } from "react-icons/fa";
 
 const HeroSection = () => {
 
@@ -37,61 +38,81 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Hero Image */}
-<div className="relative flex-1">
+          <div className="relative flex-1">
 
-  {/* Floating Icon 1 */}
-  <motion.div
-    className="absolute top-10 left-5 z-20"
-    animate={{ y: [0, -15, 0] }}
-    transition={{ duration: 4, repeat: Infinity }}
-  >
-    <img src="/icons/graduation.svg" className="w-10 opacity-80" />
-  </motion.div>
+            {/* Floating Icon 1 - Graduation */}
+            <motion.div
+              className="absolute top-12 left-2 z-20"
+              animate={{ y: [0, -15, 0, 10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#06b6d4"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-12 h-12"
+              >
+                <path d="M22 12L12 7L2 12L12 17L22 12Z" />
+                <path d="M6 15V18C6 18 8 20 12 20C16 20 18 18 18 18V15" />
+              </svg>
+            </motion.div>
 
-  {/* Floating Icon 2 */}
-  <motion.div
-    className="absolute bottom-10 left-20 z-20"
-    animate={{ y: [0, 20, 0] }}
-    transition={{ duration: 5, repeat: Infinity }}
-  >
-    <img src="/icons/book.svg" className="w-8 opacity-80" />
-  </motion.div>
+            {/* Floating Icon 2 - Book */}
+            <motion.div
+              className="absolute bottom-10 left-10 z-20"
+              animate={{ x: [0, 20, 0] }}
+              transition={{ duration: 5, repeat: Infinity }}
+            >
+              <FaBook className="w-8 h-8 opacity-80 text-accent-content" />
+            </motion.div>
 
-  {/* Floating Icon 3 */}
-  <motion.div
-    className="absolute top-24 right-10 z-20"
-    animate={{ y: [0, -25, 0] }}
-    transition={{ duration: 6, repeat: Infinity }}
-  >
-    <img src="/icons/trophy.svg" className="w-9 opacity-80" />
-  </motion.div>
+            {/* Floating Icon 3 - Trophy */}
+            <motion.div
+              className="absolute top-20 right-1 z-20"
+              animate={{ y: [0, -25, 0] }}
+              transition={{ duration: 6, repeat: Infinity }}
+            >
+              <FaTrophy className="w-8 h-8 opacity-80 text-accent-content" />
+            </motion.div>
 
-  {/* Floating Icon 4 */}
-  <motion.div
-    className="absolute bottom-14 right-24 z-20"
-    animate={{ y: [0, 18, 0] }}
-    transition={{ duration: 5.5, repeat: Infinity }}
-  >
-    <img src="/icons/globe.svg" className="w-8 opacity-80" />
-  </motion.div>
+            {/* Floating Icon 4 - Globe */}
+            <motion.div
+              className="absolute bottom-0 right-10 z-20"
+              animate={{
+                x: [0, 10, 0, -10, 0],
+                y: [0, -10, -20, -10, 0]
+              }}
+              transition={{
+                duration: 5.5,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              <FaGlobe className="w-8 h-8 opacity-80 text-accent-content" />
+            </motion.div>
 
-  {/* Background Circle */}
-  <img
-    src={heroImageBG}
-    alt=""
-    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[380px] lg:h-[480px]"
-  />
+            {/* Background Circle */}
+            <img
+              src={heroImageBG}
+              alt=""
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[380px] lg:h-[480px]"
+            />
 
-  {/* Main Hero Image */}
-  <motion.img
-    src={heroImage}
-    alt="Scholarship Banner"
-    className="relative rounded-full w-full h-[350px] z-10 object-cover lg:h-[450px] xl:h-[500px]"
-    initial={{ x: 50, opacity: 0 }}
-    animate={{ x: 0, opacity: 1 }}
-    transition={{ duration: 0.6 }}
-  />
-</div>
+            {/* Main Hero Image */}
+            <motion.img
+              src={heroImage}
+              alt="Scholarship Banner"
+              className="relative rounded-full w-full h-[350px] z-10 object-cover lg:h-[450px]"
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            />
+          </div>
 
 
 
