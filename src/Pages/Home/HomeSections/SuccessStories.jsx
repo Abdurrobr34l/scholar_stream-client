@@ -22,11 +22,11 @@ const successStories = [
   },
   {
     id: 3,
-    name: "Sara Lee",
-    course: "Business Administration",
+    name: "Abdur Rob",
+    course: "MERN Stack Developer",
     university: "Oxford University",
     message: "The application process became so easy with the guidance provided. I secured my dream scholarship.",
-    avatar: "https://i.pravatar.cc/100?img=3",
+    avatar: "https://i.ibb.co.com/GQvJ892f/mine-5-modified.webp",
   },
   {
     id: 4,
@@ -90,30 +90,32 @@ const SuccessStories = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
               {successStories
                 .slice(index, index + 2)
-                .map((story) => (
+                .map(({ id, avatar, name, course, university, message }) => (
                   <motion.div
-                    key={story.id}
+                    key={id}
                     initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}      // triggers animation when in viewport
+                    viewport={{ once: true, amount: 0.3 }} // animate once, when 30% visible
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5 }}
                     className="bg-white rounded-2xl p-8 shadow-lg"
                   >
                     <div className="flex items-center gap-4 mb-4">
                       <img
-                        src={story.avatar}
-                        alt={story.name}
+                        src={avatar}
+                        alt={name}
                         className="w-16 h-16 rounded-full object-cover"
                       />
                       <div>
                         <h4 className="font-semibold text-primary">
-                          {story.name}
+                          {name}
                         </h4>
                         <p className="text-sm text-secondary">
-                          {story.course}, {story.university}
+                          {course}, <span className="font-semibold text-accent!">{university}</span>
                         </p>
                       </div>
                     </div>
-                    <p className="text-secondary">{story.message}</p>
+                    <p className="text-secondary">{message}</p>
                   </motion.div>
                 ))}
             </div>
@@ -122,18 +124,18 @@ const SuccessStories = () => {
           {/* Arrows */}
           <div className="mt-3 flex justify-center gap-3">
             <button
-            onClick={prevSlide}
-            className=" bg-primary text-white px-4 py-2 rounded-full transition-colors duration-300 ease-linear hover:bg-accent"
-          >
-            ❮
-          </button>
+              onClick={prevSlide}
+              className=" bg-primary text-white px-4 py-2 rounded-full transition-colors duration-300 ease-linear hover:bg-accent"
+            >
+              ❮
+            </button>
 
-          <button
-            onClick={nextSlide}
-            className=" bg-primary text-white px-4 py-2 rounded-full transition-colors duration-300 ease-linear hover:bg-accent"
-          >
-            ❯
-          </button>
+            <button
+              onClick={nextSlide}
+              className=" bg-primary text-white px-4 py-2 rounded-full transition-colors duration-300 ease-linear hover:bg-accent"
+            >
+              ❯
+            </button>
           </div>
         </div>
       </Container>
