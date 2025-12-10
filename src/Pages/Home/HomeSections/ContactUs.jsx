@@ -10,8 +10,8 @@ const ContactUs = () => {
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          whileInView={{ opacity: 1, y: 0 }}      // triggers animation when in viewport
+          viewport={{ once: true, amount: 0.3 }} // animate once, when 30% visible
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl mx-auto"
         >
@@ -23,7 +23,7 @@ const ContactUs = () => {
             Our team is here to guide you every step of the way.
           </p>
 
-          <PrimaryButton path="mailto:scholarstream.support@gmail.com" buttonName="Contact Us"></PrimaryButton>
+          <PrimaryButton path="mailto:scholarstream.support@gmail.com" buttonName="Contact Us" customStyling="bg-accent! hover:bg-primary! hover:text-white!"/>
 
         </motion.div>
       </Container>

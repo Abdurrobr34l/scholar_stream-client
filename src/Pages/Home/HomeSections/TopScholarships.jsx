@@ -73,7 +73,7 @@ const TopScholarships = () => {
             >
 
               {/* Decorative Top Wave */}
-              <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-accent-content to-primary"></div>
+              <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-primary to-accent-content"></div>
 
               {/* Floating Chip Badge */}
               <div className="absolute right-4 top-3">

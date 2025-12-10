@@ -38,7 +38,7 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Hero Image */}
-          <div className="relative flex-1">
+          <motion.div className="relative flex-1">
 
             {/* Floating Icon 1 - Graduation */}
             <motion.div
@@ -94,27 +94,34 @@ const HeroSection = () => {
               <FaGlobe className="w-8 h-8 opacity-80 text-accent-content" aria-hidden="true" />
             </motion.div>
 
-            {/* Background Circle */}
-            <img
-              src={heroImageBG}
-              alt=""
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[380px] lg:h-[480px]"
-            />
-
-            {/* Main Hero Image */}
-            <motion.img
-              src={heroImage}
-              alt="Scholarship Banner"
-              className="relative rounded-full w-full h-[350px] z-10 object-cover lg:h-[450px]"
+            <motion.div
+              className="relative flex-1"
               initial={{ x: 50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
-            />
-          </div>
+              animate={{ x: [50, 0], opacity: [0, 1] }}
+              transition={{ duration: 2 }}
+            >
+              {/* Background Circle */}
+              <motion.img
+                src={heroImageBG}
+                alt=""
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[380px] lg:h-[480px]"
+                animate={{ rotate: [0, 15, -10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Main Hero Image */}
+              <motion.img
+                src={heroImage}
+                alt="Scholarship Banner"
+                className="relative rounded-full w-full h-[350px] z-10 object-cover lg:h-[450px]"
+              />
+            </motion.div>
+
+          </motion.div>
 
         </div>
       </Container>
-    </section>
+    </section >
   );
 };
 
