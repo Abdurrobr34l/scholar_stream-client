@@ -44,7 +44,8 @@ const HeroSection = () => {
             <motion.div
               className="absolute top-12 left-2 z-20"
               animate={{ y: [0, -15, 0, 10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0 }}
+              whileHover={{ scale: 1.2, rotate: 10 }}
             >
               <svg
                 width="48"
@@ -56,6 +57,7 @@ const HeroSection = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="w-12 h-12"
+                aria-hidden="true"
               >
                 <path d="M22 12L12 7L2 12L12 17L22 12Z" />
                 <path d="M6 15V18C6 18 8 20 12 20C16 20 18 18 18 18V15" />
@@ -66,34 +68,30 @@ const HeroSection = () => {
             <motion.div
               className="absolute bottom-10 left-10 z-20"
               animate={{ x: [0, 20, 0] }}
-              transition={{ duration: 5, repeat: Infinity }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+              whileHover={{ scale: 1.2, rotate: 10 }}
             >
-              <FaBook className="w-8 h-8 opacity-80 text-accent-content" />
+              <FaBook className="w-8 h-8 opacity-80 text-accent-content" aria-hidden="true" />
             </motion.div>
 
             {/* Floating Icon 3 - Trophy */}
             <motion.div
               className="absolute top-20 right-1 z-20"
               animate={{ y: [0, -25, 0] }}
-              transition={{ duration: 6, repeat: Infinity }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              whileHover={{ scale: 1.2, rotate: 10 }}
             >
-              <FaTrophy className="w-8 h-8 opacity-80 text-accent-content" />
+              <FaTrophy className="w-8 h-8 opacity-80 text-accent-content" aria-hidden="true" />
             </motion.div>
 
             {/* Floating Icon 4 - Globe */}
             <motion.div
               className="absolute bottom-0 right-10 z-20"
-              animate={{
-                x: [0, 10, 0, -10, 0],
-                y: [0, -10, -20, -10, 0]
-              }}
-              transition={{
-                duration: 5.5,
-                repeat: Infinity,
-                ease: "linear"
-              }}
+              animate={{ x: [0, 10, 0, -10, 0], y: [0, -10, -20, -10, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+              whileHover={{ scale: 1.2, rotate: 10 }}
             >
-              <FaGlobe className="w-8 h-8 opacity-80 text-accent-content" />
+              <FaGlobe className="w-8 h-8 opacity-80 text-accent-content" aria-hidden="true" />
             </motion.div>
 
             {/* Background Circle */}
@@ -113,8 +111,6 @@ const HeroSection = () => {
               transition={{ duration: 0.6 }}
             />
           </div>
-
-
 
         </div>
       </Container>

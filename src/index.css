@@ -35,14 +35,16 @@ h6 {
 body {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
+  background-color: #f8fafc;
   @apply text-secondary;
 }
 
-.bg-clr {
-  @apply bg-[#F8FAFC];
-}
+/** NAVLINK STYLING */
 
 /** NAVLINK STYLING */
+.sectionPadding {
+  @apply py-8 md:py-12 lg:py-16 xl:py-20;
+}
 .navlink {
   @apply p-0 font-semibold text-primary hover:text-accent hover:bg-transparent!;
 }

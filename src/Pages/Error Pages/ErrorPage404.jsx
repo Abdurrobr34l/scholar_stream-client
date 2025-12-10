@@ -11,7 +11,7 @@ const ErrorPage = () => {
         <title>FinEase | Error Page</title>
       {/* </HeadProvider> */}
 
-      <section className="flex flex-col items-center justify-center min-h-screen gap-6 py-10 text-center">
+      <section className="flex flex-col items-center justify-center min-h-screen gap-6 py-10 text-center bg-white">
         {/* 404 Image */}
         <img
           src={notFoundImg}

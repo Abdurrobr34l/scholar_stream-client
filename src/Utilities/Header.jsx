@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-clr py-3.5 shadow-sm">
+    <header className="py-3.5 shadow-sm">
       <Container className='navbar'>
         {/*//* DROPDOWN MENU & LOGO */}
         <div className="navbar-start flex-row-reverse w-full justify-between lg:w-auto lg:flex-1">
