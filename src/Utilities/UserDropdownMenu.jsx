@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 const UserDropdownMenu = ({ user }) => {
   return (
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar w-16!">
-        <div className="border rounded-full">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar tooltip tooltip-bottom w-16" data-tip="Profile">
+        <div className="border rounded-full" data-tip="Profile">
           <img
             alt="User avatar"
             src={user?.photoURL || "https://via.placeholder.com/150"}

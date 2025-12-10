@@ -8,7 +8,7 @@ const MainLayout = () => {
     <>
       <Header></Header>
 
-      <main className='min-h-[calc(100vh-100px-128px)]'>
+      <main className='min-h-[calc(100vh-100px-128px)]'> {/*min-h-[calc(100vh-100px-128px))] ----- 228px = header(100px) + footer(128px) */}
         <Outlet></Outlet>
       </main>
 

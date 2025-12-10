@@ -49,3 +49,13 @@ body {
 .active {
   @apply text-accent!;
 }
+
+/** MAKE BOTTOM TOOLTIP APPEAR LOWER */
+.tooltip.tooltip-bottom:before {
+  margin-top: 12px !important;
+}
+
+/** MOVE TOOLTIP ARROW ALSO */
+.tooltip.tooltip-bottom:after {
+  margin-top: 12px !important; 
+}
