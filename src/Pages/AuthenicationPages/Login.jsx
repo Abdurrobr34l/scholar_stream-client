@@ -4,6 +4,11 @@ import { AuthContext } from '../../Context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
+import Container from '../../Utilities/Container';
+import SectionTitle from '../../Utilities/SectionTitle';
+import PrimaryButton from '../../Utilities/PrimaryButton';
+import SecondaryButton from '../../Utilities/SecondaryButton';
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
@@ -31,50 +36,71 @@ const Login = () => {
   };
 
   return (
-    <section className="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow-md">
+    <section className="sectionPadding">
       <PageTitle title="Login" />
-      <h2 className="text-2xl font-semibold mb-6 text-primary text-center">
-        Sign into your ScholarStream account
-      </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="input input-bordered w-full"
-          {...register('email', { required: 'Email is required' })}
-        />
-        {errors.email && <p className="text-error text-sm">{errors.email.message}</p>}
+      <Container>
+        {/* Title */}
+        <div className="text-center">
+          <SectionTitle customStyle="mb-3!" sectionName="Login Now" />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="input input-bordered w-full"
-          {...register('password', { required: 'Password is required' })}
-        />
-        {errors.password && <p className="text-error text-sm">{errors.password.message}</p>}
+          <h3 className="mb-6 text-2xl font-semibold">
+            Login to your <span className="text-accent-content">ScholarStream</span> account
+          </h3>
+        </div>
 
-        <button type="submit" className="btn btn-accent mt-4">
-          Login
-        </button>
-      </form>
+        {/* Form Card */}
+        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
 
-      <div className="mt-4 text-center">
-        <p>Or</p>
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-outline mt-2"
-        >
-          Sign in with Google
-        </button>
-      </div>
+          {/* Form */}
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+            {/* Email */}
+            <input
+              type="email"
+              placeholder="Email"
+              className="input input-bordered w-full"
+              {...register('email', { required: 'Email is required' })}
+            />
+            {errors.email && <p className="text-error text-sm">{errors.email.message}</p>}
 
-      <p className="mt-4 text-center text-sm">
-        Don't have an account?{' '}
-        <a href="/register" className="text-accent font-semibold hover:underline">
-          Register
-        </a>
-      </p>
+            {/* Password */}
+            <input
+              type="password"
+              placeholder="Password"
+              className="input input-bordered w-full"
+              {...register('password', { required: 'Password is required' })}
+            />
+            {errors.password && <p className="text-error text-sm">{errors.password.message}</p>}
+
+            <PrimaryButton
+              type="submit"
+              buttonName="Login"
+              customStyling="w-full justify-center mt-4"
+            />
+          </form>
+
+          {/* OR Divider */}
+          <div className="text-center mb-4">
+            <p className="text-sm">OR</p>
+
+            <SecondaryButton
+              type="button"
+              icon={FcGoogle}
+              buttonName="Continue with Google"
+              customStyling="w-full justify-center mt-3"
+              onClick={handleGoogleLogin}
+            />
+          </div>
+
+          {/* Link to Register */}
+          <p className="mt-4 text-center text-sm">
+            Don’t have an account?{' '}
+            <a href="/register" className="text-accent font-semibold hover:underline">
+              Register
+            </a>
+          </p>
+        </div>
+      </Container>
     </section>
   );
 };
