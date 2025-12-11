@@ -70,11 +70,24 @@ const Register = () => {
     }
   };
 
-
   const handleGoogleLogin = async () => {
     try {
-      await signInWithGoogle();
-      toast.success('Google login successful!');
+      const userCredential = await signInWithGoogle();
+      const user = userCredential.user;
+
+      //* User data for backend
+      const userInfo = {
+        uid: user.uid,
+        name: user.displayName || "No Name",
+        email: user.email,
+        photoURL: user.photoURL || "",
+        role: "Student",
+        createdAt: new Date(),
+      };
+
+      //* Send to backend
+      await axiosSecure.post("/users", userInfo);
+      toast.success('Register using Google account successfully!');
       navigate('/');
     } catch (error) {
       toast.error(error.message);
@@ -146,7 +159,7 @@ const Register = () => {
 
             <button
               type="submit"
-              className='inline-flex justify-center items-center gap-2 mt-2 px-5 py-2.5 rounded-lg font-semibold shadow-soft bg-primary text-white transition-colors duration-300 ease-linear hover:bg-accent hover:text-primary'>Login</button>
+              className='inline-flex justify-center items-center gap-2 mt-2 px-5 py-2.5 rounded-lg font-semibold shadow-soft bg-primary text-white transition-colors duration-300 ease-linear hover:bg-accent hover:text-primary'>Register</button>
 
             <p className="-my-2 text-sm text-center">OR</p>
 
@@ -154,7 +167,7 @@ const Register = () => {
               onClick={handleGoogleLogin}
               className='inline-flex items-center justify-center gap-2 px-5 py-2.5 w-full rounded-lg font-semibold border border-primary text-primary bg-white transition-colors duration-300 ease-linear 
                     hover:bg-accent-content hover:text-white hover:border-accent-content'>
-              <FcGoogle /> Login with Google
+              <FcGoogle /> Register with Google
             </button>
 
           </form>
