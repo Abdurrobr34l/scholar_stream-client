@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
 import PageTitle from "../../Utilities/PageTitle";
 import SectionTitle from "../../Utilities/SectionTitle";
 import Container from "../../Utilities/Container";
 import { FcGoogle } from "react-icons/fc";
-import { AuthContext } from "../../Context/AuthContext";
+import useAuth from "../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
 import useAxios from "../../Hooks/useAxios";
 import axios from "axios";
@@ -11,36 +10,52 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const { registerUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
+  const {
+    registerUser,
+    updateUserProfile,
+    signInWithGoogle,
+    logOut,
+    setUser,
+    setPreventAutoLogin,
+  } = useAuth();
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const axiosSecure = useAxios();
   const navigate = useNavigate();
 
+  // ============================================
+  // REGISTER WITH EMAIL & PASSWORD
+  // ============================================
   const onSubmit = async (data) => {
     const { name, email, password, photo } = data;
 
     try {
-      //* Register user with Firebase Auth
+      // BLOCK auto-login from Firebase
+      setPreventAutoLogin(true);
+
       const userCredential = await registerUser(email, password);
       const user = userCredential.user;
 
       let photoURL = "";
 
-      //* Upload image if user selected one
+      // Upload profile photo (if any)
       if (photo && photo[0]) {
         const file = photo[0];
         const formData = new FormData();
         formData.append("image", file);
 
-        const imgbbURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`;
+        const imgbbURL = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`;
+
         const imgRes = await axios.post(imgbbURL, formData);
-        photoURL = imgRes.data.data.url; // get uploaded image URL
+        photoURL = imgRes.data.data.url;
       }
 
-      //* Update Firebase profile
+      // Update Firebase profile
       await updateUserProfile({ displayName: name, photoURL });
 
-      //* Save user to MongoDB via server
+      // Save user to database
       const userInfo = {
         uid: user.uid,
         name,
@@ -49,58 +64,63 @@ const Register = () => {
         role: "Student",
         createdAt: new Date(),
       };
+      await axiosSecure.post("/users", userInfo);
 
-      const res = await axiosSecure.post("/users", userInfo);
-      if (res.data.insertedId || res.data.message === "User Exists") {
-        toast.success("Registration successful!");
-      }
+      // LOG OUT — force user to be logged out after register
+      await logOut();
+      setUser(null);
+      setPreventAutoLogin(false);
 
+      toast.success("Registration successful! Please log in.");
       reset();
       navigate("/login");
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        toast.error("This email is already registered!");
-      } else if (error.code === "auth/invalid-email") {
-        toast.error("Please enter a valid email address.");
-      } else if (error.code === "auth/weak-password") {
-        toast.error("Your password is too weak.");
-      } else {
-        toast.error("Registration failed. Please try again.");
-      }
+      console.error(error);
+      toast.error(error.message);
+      setPreventAutoLogin(false);
     }
   };
 
+  // ============================================
+  // REGISTER WITH GOOGLE
+  // ============================================
   const handleGoogleLogin = async () => {
     try {
+      // BLOCK auto-login
+      setPreventAutoLogin(true);
+
       const userCredential = await signInWithGoogle();
       const user = userCredential.user;
 
-      //* User data for backend
       const userInfo = {
         uid: user.uid,
-        name: user.displayName || "No Name",
+        name: user.displayName,
         email: user.email,
-        photoURL: user.photoURL || "",
+        photoURL: user.photoURL,
         role: "Student",
         createdAt: new Date(),
       };
 
-      //* Send to backend
       await axiosSecure.post("/users", userInfo);
-      toast.success('Register using Google account successfully!');
-      navigate('/');
+
+      await logOut();
+      setUser(null);
+      setPreventAutoLogin(false);
+
+      toast.success("Google registration successful! Please log in.");
+      navigate("/login");
     } catch (error) {
+      console.error(error);
       toast.error(error.message);
+      setPreventAutoLogin(false);
     }
   };
 
   return (
     <section className="sectionPadding">
-      {/* Pagetitle */}
       <PageTitle title="Register" />
 
       <Container>
-        {/* Title & Subtitle */}
         <div className="text-center">
           <SectionTitle customStyle="mb-3!" sectionName="Register Now" />
           <h3 className="mb-3 text-2xl font-semibold">
@@ -111,10 +131,10 @@ const Register = () => {
           </p>
         </div>
 
-        {/* Form */}
         <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
 
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+
             {/* Name */}
             <input
               type="text"
@@ -133,10 +153,9 @@ const Register = () => {
             />
             {errors.email && <p className="text-error text-sm">{errors.email.message}</p>}
 
-            {/* Photo URL */}
+            {/* Photo */}
             <input
               type="file"
-              placeholder="Photo URL (optional)"
               className="input input-bordered w-full py-2!"
               {...register("photo")}
             />
@@ -159,17 +178,20 @@ const Register = () => {
 
             <button
               type="submit"
-              className='inline-flex justify-center items-center gap-2 mt-2 px-5 py-2.5 rounded-lg font-semibold shadow-soft bg-primary text-white transition-colors duration-300 ease-linear hover:bg-accent hover:text-primary'>Register</button>
+              className="inline-flex justify-center items-center gap-2 mt-2 px-5 py-2.5 rounded-lg font-semibold shadow-soft bg-primary text-white transition-colors hover:bg-accent hover:text-primary"
+            >
+              Register
+            </button>
 
             <p className="-my-2 text-sm text-center">OR</p>
 
             <button
+              type="button"
               onClick={handleGoogleLogin}
-              className='inline-flex items-center justify-center gap-2 px-5 py-2.5 w-full rounded-lg font-semibold border border-primary text-primary bg-white transition-colors duration-300 ease-linear 
-                    hover:bg-accent-content hover:text-white hover:border-accent-content'>
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 w-full rounded-lg font-semibold border border-primary text-primary bg-white transition-colors hover:bg-accent-content hover:text-white"
+            >
               <FcGoogle /> Register with Google
             </button>
-
           </form>
 
           <p className="mt-4 text-center text-sm">
