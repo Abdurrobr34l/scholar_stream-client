@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
-import useAxios from "../../Hooks/useAxios";
-import { AuthContext } from "../../Context/AuthContext";
 import PageTitle from "../../Utilities/PageTitle";
 import SectionTitle from "../../Utilities/SectionTitle";
-import axios from "axios";
 import Container from "../../Utilities/Container";
-import PrimaryButton from "../../Utilities/PrimaryButton";
+import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../../Context/AuthContext";
+import { useForm } from "react-hook-form";
+import useAxios from "../../Hooks/useAxios";
+import axios from "axios";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const { registerUser, updateUserProfile } = useContext(AuthContext);
+  const { registerUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const axiosSecure = useAxios();
   const navigate = useNavigate();
@@ -67,6 +67,17 @@ const Register = () => {
       } else {
         toast.error("Registration failed. Please try again.");
       }
+    }
+  };
+
+
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle();
+      toast.success('Google login successful!');
+      navigate('/');
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -133,11 +144,19 @@ const Register = () => {
             />
             {errors.password && <p className="text-error text-sm">{errors.password.message}</p>}
 
-            <PrimaryButton
+            <button
               type="submit"
-              buttonName="Register"
-              customStyling="w-full justify-center mt-4"
-            />
+              className='inline-flex justify-center items-center gap-2 mt-2 px-5 py-2.5 rounded-lg font-semibold shadow-soft bg-primary text-white transition-colors duration-300 ease-linear hover:bg-accent hover:text-primary'>Login</button>
+
+            <p className="-my-2 text-sm text-center">OR</p>
+
+            <button
+              onClick={handleGoogleLogin}
+              className='inline-flex items-center justify-center gap-2 px-5 py-2.5 w-full rounded-lg font-semibold border border-primary text-primary bg-white transition-colors duration-300 ease-linear 
+                    hover:bg-accent-content hover:text-white hover:border-accent-content'>
+              <FcGoogle /> Login with Google
+            </button>
+
           </form>
 
           <p className="mt-4 text-center text-sm">

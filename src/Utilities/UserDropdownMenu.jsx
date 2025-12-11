@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
+import useAuth from '../Hooks/useAuth';
 
 const UserDropdownMenu = ({ user }) => {
+  const { logOut } = useAuth()
   const role = user?.role || "User";
 
   return (
@@ -11,7 +13,7 @@ const UserDropdownMenu = ({ user }) => {
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle w-16! avatar">
         <div className="w-16 rounded-full">
           <img
-            src={user?.photoURL || "https://via.placeholder.com/150"}
+            src={user?.photoURL || "https://img.icons8.com/ultraviolet/40/user-male-circle.png"}
             alt="User Avatar"
           />
         </div>
@@ -23,11 +25,10 @@ const UserDropdownMenu = ({ user }) => {
         className="menu menu-sm dropdown-content mt-4 w-60 bg-base-100 shadow rounded-box p-4 z-20"
       >
         {/* User Info */}
-        <div className="border-b pb-3 mb-3">
+        <div className="relative mb-3 pb-3 border-b ">
           <h3 className="font-semibold text-lg">{user?.displayName || "No Name"}</h3>
           <p className="text-sm text-gray-500">{user?.email}</p>
-
-          <p className="badge badge-soft badge-info mt-2 px-2 py-1 font-semibold">
+          <p className="badge badge-soft badge-info absolute right-0 -top-2 mt-2 px-2 py-1 font-bold">
             {role}
           </p>
         </div>
@@ -36,7 +37,7 @@ const UserDropdownMenu = ({ user }) => {
         <li>
           <Link
             to="/dashboard"
-            className="text-base font-semibold hover:text-primary hover:bg-transparent"
+            className="text-base text-primary font-semibold hover:text-accent hover:bg-transparent"
           >
             Dashboard
           </Link>
@@ -44,7 +45,7 @@ const UserDropdownMenu = ({ user }) => {
 
         {/* Logout */}
         <li>
-          <button className="text-error text-base font-semibold hover:text-red-600 hover:bg-transparent">
+          <button onClick={logOut} className="text-error text-base font-semibold hover:text-red-600 hover:bg-transparent">
             Logout
           </button>
         </li>

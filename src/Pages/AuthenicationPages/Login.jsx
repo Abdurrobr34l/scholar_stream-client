@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import PageTitle from '../../Utilities/PageTitle';
+import SectionTitle from '../../Utilities/SectionTitle';
+import Container from '../../Utilities/Container';
+import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from '../../Context/AuthContext';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
-import Container from '../../Utilities/Container';
-import SectionTitle from '../../Utilities/SectionTitle';
-import PrimaryButton from '../../Utilities/PrimaryButton';
-import SecondaryButton from '../../Utilities/SecondaryButton';
-import { FcGoogle } from "react-icons/fc";
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
@@ -18,7 +16,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       await signInUser(data.email, data.password);
-      toast.success('Login successful!');
+      toast.success('Logged successful!');
       navigate('/');
     } catch (error) {
       toast.error(error.message);
@@ -72,24 +70,21 @@ const Login = () => {
             />
             {errors.password && <p className="text-error text-sm">{errors.password.message}</p>}
 
-            <PrimaryButton
+            <button
               type="submit"
-              buttonName="Login"
-              customStyling="w-full justify-center mt-4"
-            />
+              className='inline-flex justify-center items-center gap-2 mb-2 px-5 py-2.5 rounded-lg font-semibold shadow-soft bg-primary text-white transition-colors duration-300 ease-linear hover:bg-accent hover:text-primary'>Login</button>
           </form>
 
           {/* OR Divider */}
-          <div className="text-center mb-4">
+          <div className="text-center">
             <p className="text-sm">OR</p>
 
-            <SecondaryButton
-              type="button"
-              icon={FcGoogle}
-              buttonName="Continue with Google"
-              customStyling="w-full justify-center mt-3"
+            <button
               onClick={handleGoogleLogin}
-            />
+              className='inline-flex items-center justify-center gap-2 mt-2 px-5 py-2.5 w-full rounded-lg font-semibold border border-primary text-primary bg-white transition-colors duration-300 ease-linear 
+        hover:bg-accent-content hover:text-white hover:border-accent-content'>
+              <FcGoogle /> Login with Google
+            </button>
           </div>
 
           {/* Link to Register */}
