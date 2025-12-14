@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import ErrorPage404 from "../Pages/Error Pages/ErrorPage404";
 import Register from "../Pages/AuthenicationPages/Register";
 import Login from "../Pages/AuthenicationPages/Login";
+import AllScholarship from "../Pages/Scholarships/AllScholarship";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -15,6 +16,12 @@ export const router = createBrowserRouter([
         index: true,
         Component: Home
       },
+      //* SCHOLARSHIPS ROUTES
+      {
+        path: "/all-scholarships",
+        Component: AllScholarship
+      },
+      //* AUTHENTICATION ROUTES
       {
         path: "/register",
         Component: Register
@@ -23,6 +30,7 @@ export const router = createBrowserRouter([
         path: "login",
         Component: Login
       },
+      //* ERROR PAGE ROUTE
       {
         path: "*",
         Component: ErrorPage404
