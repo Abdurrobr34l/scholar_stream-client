@@ -63,6 +63,6 @@ body {
 }
 
 /** FORM INPUT */
-input {
-  @apply py-5 border-secondary focus:outline-accent focus:border-accent;
+input, select {
+  @apply py-5 text-primary border-primary focus:outline-accent focus:border-accent;
 }
