@@ -5,6 +5,7 @@ import ErrorPage404 from "../Pages/Error Pages/ErrorPage404";
 import Register from "../Pages/AuthenicationPages/Register";
 import Login from "../Pages/AuthenicationPages/Login";
 import AllScholarship from "../Pages/Scholarships/AllScholarship";
+import ScholarshipDetail from "../Pages/Scholarships/ScholarshipDetail";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "/all-scholarships",
         Component: AllScholarship
+      },
+      {
+        path: "/all-scholarships/:id",
+        Component: ScholarshipDetail
       },
       //* AUTHENTICATION ROUTES
       {
