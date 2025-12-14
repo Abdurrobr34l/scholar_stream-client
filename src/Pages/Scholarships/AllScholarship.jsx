@@ -11,39 +11,123 @@ import { Link } from 'react-router';
 const AllScholarship = () => {
   const { data, isLoading, error } = useAllScholarships();
   const [searchedText, setSearchedText] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+const [activeGroup, setActiveGroup] = useState(null);
 
+
+  // const filteredScholarships = data?.filter(scholarship => {
+  //   return (
+  //     scholarship.universityName.toLowerCase().includes(searchedText.toLowerCase()) ||
+  //     scholarship.scholarshipCategory.toLowerCase().includes(searchedText.toLowerCase()) ||
+  //     scholarship.universityCity?.toLowerCase().includes(searchedText.toLowerCase()) ||
+  //     scholarship.universityCountry?.toLowerCase().includes(searchedText.toLowerCase())
+  //   );
+  // });
   const filteredScholarships = data?.filter(scholarship => {
-    return (
-      scholarship.universityName.toLowerCase().includes(searchedText.toLowerCase()) ||
+  const textMatch =
+    scholarship.universityName.toLowerCase().includes(searchedText.toLowerCase()) ||
       scholarship.scholarshipCategory.toLowerCase().includes(searchedText.toLowerCase()) ||
       scholarship.universityCity?.toLowerCase().includes(searchedText.toLowerCase()) ||
       scholarship.universityCountry?.toLowerCase().includes(searchedText.toLowerCase())
-    );
-  });
+
+  const filterMatch =
+    !selectedFilter ||
+    scholarship.scholarshipCategory === selectedFilter ||
+    scholarship.subjectCategory === selectedFilter ||
+    `${scholarship.universityCity}, ${scholarship.universityCountry}` === selectedFilter;
+
+  return textMatch && filterMatch;
+});
+
 
 
   if (isLoading) return <LoadingSpinner />;
   if (error) return <p>Failed to load data</p>;
+
+  const filterOptions = React.useMemo(() => {
+  if (!data) return {};
+
+  return {
+    "Scholarship Category": [...new Set(data.map(d => d.scholarshipCategory))],
+    "Subject Category": [...new Set(data.map(d => d.subjectCategory))],
+    "Location": [...new Set(data.map(d => `${d.universityCity}, ${d.universityCountry}`))]
+  };
+}, [data]);
 
   return (
     <section className='sectionPadding'>
       <Container>
         <PageTitle title={"All Scholarships"} />
 
-        <div className='flex justify-between'>
-          <SectionTitle sectionName={`Total Scholarships: ${filteredScholarships.length}`} customStyle={"text-start"}></SectionTitle>
+        <div className='flex flex-col pb-6 md:flex-row md:justify-between'>
+          <SectionTitle sectionName={`Total Scholarships: ${filteredScholarships.length}`} customStyle={"text-start md:text-3xl!"}></SectionTitle>
 
-          <div className='flex gap-4'>
+          <div className='flex flex-col gap-4 md:flex-row'>
             {/* Search */}
-            <input onChange={(e) => setSearchedText(e.target.value)} type="text" placeholder="Search..." className="input input-bordered" />
+            <input onChange={(e) => setSearchedText(e.target.value)} type="text" placeholder="Search..." className="input input-bordered lg:w-[200px]" />
 
             {/* Filter */}
-            <select defaultValue="Filter By:" className="select p-0! pl-3!">
-              <option disabled={true}>Filter By:</option>
-              <option>Scholarship Category</option>
-              <option>Subject Category</option>
-              <option>Location</option>
-            </select>
+            <div className="relative lg:w-[220px]">
+  {/* Select Button */}
+  <button
+    onClick={() => setIsOpen(!isOpen)}
+    className="w-full flex justify-between items-center border border-gray-300 px-4 py-2 rounded-md bg-white"
+  >
+    <span>{selectedFilter || "Filter By"}</span>
+    <span>▾</span>
+  </button>
+
+  {/* Dropdown */}
+  {isOpen && (
+    <div className="absolute top-full left-0 w-full bg-white border shadow-lg z-50">
+      {Object.keys(filterOptions).map(group => (
+        <div
+          key={group}
+          className="relative group border-b last:border-b-0"
+          onMouseEnter={() => setActiveGroup(group)}
+        >
+          {/* Main option */}
+          <div className="px-4 py-2 font-semibold hover:bg-gray-100 cursor-pointer flex justify-between">
+            {group}
+            <span>›</span>
+          </div>
+
+          {/* Nested options */}
+          {activeGroup === group && (
+            <div className="absolute top-0 right-full w-56 bg-white border shadow-lg">
+              {filterOptions[group].map(option => (
+                <div
+                  key={option}
+                  onClick={() => {
+                    setSelectedFilter(option);
+                    setIsOpen(false);
+                    setActiveGroup(null);
+                  }}
+                  className="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer"
+                >
+                  {option}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+            {/* <select
+              value={selectedFilter}
+              onChange={(e) => setSelectedFilter(e.target.value)}
+              className="select p-0! pl-3! lg:w-[200px]"
+            >
+              <option value="">Filter By:</option>
+              <option value="Scholarship Category">Scholarship Category</option>
+              <option value="Subject Category">Subject Category</option>
+              <option value="Location">Location</option>
+            </select> */}
+
           </div>
         </div>
 

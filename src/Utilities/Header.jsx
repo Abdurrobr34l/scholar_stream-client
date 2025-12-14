@@ -21,7 +21,7 @@ const Header = () => {
       <Container className="navbar">
 
         {/* Dropdown menu & Logo */}
-        <div className="navbar-start flex-row-reverse w-full justify-between lg:w-auto lg:flex-1">
+        <div className="navbar-start flex-row-reverse w-full justify-between md:flex-3 lg:w-auto lg:flex-1">
           <div className="dropdown">
             <div
               tabIndex={0}
