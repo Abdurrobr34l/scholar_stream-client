@@ -59,10 +59,11 @@ body {
 
 /** MOVE TOOLTIP ARROW ALSO */
 .tooltip.tooltip-bottom:after {
-  margin-top: 12px !important; 
+  margin-top: 12px !important;
 }
 
 /** FORM INPUT */
-input, select {
+input,
+select {
   @apply py-5 text-primary border-primary focus:outline-accent focus:border-accent;
 }
