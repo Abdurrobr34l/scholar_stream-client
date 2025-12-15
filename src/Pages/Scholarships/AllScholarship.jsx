@@ -1,225 +1,236 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import useAllScholarships from '../../Hooks/useAllScholarships';
 import LoadingSpinner from '../../Utilities/LoadingSpinner';
-import Container from '../../Utilities/Container';
 import PageTitle from '../../Utilities/PageTitle';
+import Container from '../../Utilities/Container';
 import SectionTitle from '../../Utilities/SectionTitle';
+import { useState } from 'react';
 import { motion } from "framer-motion";
 import PrimaryButton from '../../Utilities/PrimaryButton';
 import { Link } from 'react-router';
 
 const AllScholarship = () => {
   const { data, isLoading, error } = useAllScholarships();
+
   const [searchedText, setSearchedText] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-const [activeGroup, setActiveGroup] = useState(null);
+  const [activeGroup, setActiveGroup] = useState("");
 
+  let filterOptions = {
+    "All Scholarships": [],
+    "Scholarship Category": [],
+    "Subject Category": [],
+    "Location": [],
+  };
 
-  // const filteredScholarships = data?.filter(scholarship => {
-  //   return (
-  //     scholarship.universityName.toLowerCase().includes(searchedText.toLowerCase()) ||
-  //     scholarship.scholarshipCategory.toLowerCase().includes(searchedText.toLowerCase()) ||
-  //     scholarship.universityCity?.toLowerCase().includes(searchedText.toLowerCase()) ||
-  //     scholarship.universityCountry?.toLowerCase().includes(searchedText.toLowerCase())
-  //   );
-  // });
-  const filteredScholarships = data?.filter(scholarship => {
-  const textMatch =
-    scholarship.universityName.toLowerCase().includes(searchedText.toLowerCase()) ||
-      scholarship.scholarshipCategory.toLowerCase().includes(searchedText.toLowerCase()) ||
-      scholarship.universityCity?.toLowerCase().includes(searchedText.toLowerCase()) ||
-      scholarship.universityCountry?.toLowerCase().includes(searchedText.toLowerCase())
+  if (data) {
+    data.forEach(item => {
+      // Scholarship Category
+      if (
+        item.scholarshipCategory &&
+        !filterOptions["Scholarship Category"].includes(item.scholarshipCategory)
+      ) {
+        filterOptions["Scholarship Category"].push(item.scholarshipCategory);
+      }
 
-  const filterMatch =
-    !selectedFilter ||
-    scholarship.scholarshipCategory === selectedFilter ||
-    scholarship.subjectCategory === selectedFilter ||
-    `${scholarship.universityCity}, ${scholarship.universityCountry}` === selectedFilter;
+      // Subject Category
+      if (
+        item.subjectCategory &&
+        !filterOptions["Subject Category"].includes(item.subjectCategory)
+      ) {
+        filterOptions["Subject Category"].push(item.subjectCategory);
+      }
 
-  return textMatch && filterMatch;
-});
+      // Location
+      const location = `${item.universityCity}, ${item.universityCountry}`;
+      if (!filterOptions["Location"].includes(location)) {
+        filterOptions["Location"].push(location);
+      }
+    });
+  }
 
+  const filteredScholarships = data?.filter(item => {
+    const searchMatch =
+      item.scholarshipName.toLowerCase().includes(searchedText.toLowerCase()) ||
+      item.universityName.toLowerCase().includes(searchedText.toLowerCase()) ||
+      item.scholarshipCategory.toLowerCase().includes(searchedText.toLowerCase()) ||
+      item.universityCountry?.toLowerCase().includes(searchedText.toLowerCase()) ||
+      item.universityCity?.toLowerCase().includes(searchedText.toLowerCase()) ||
+      item.degree.toLowerCase().includes(searchedText.toLowerCase());
 
+    const filterMatch =
+      selectedFilter === "" ||
+      item.scholarshipCategory === selectedFilter ||
+      item.subjectCategory === selectedFilter ||
+      `${item.universityCity}, ${item.universityCountry}` === selectedFilter;
+
+    return searchMatch && filterMatch;
+  });
 
   if (isLoading) return <LoadingSpinner />;
   if (error) return <p>Failed to load data</p>;
 
-  const filterOptions = React.useMemo(() => {
-  if (!data) return {};
-
-  return {
-    "Scholarship Category": [...new Set(data.map(d => d.scholarshipCategory))],
-    "Subject Category": [...new Set(data.map(d => d.subjectCategory))],
-    "Location": [...new Set(data.map(d => `${d.universityCity}, ${d.universityCountry}`))]
-  };
-}, [data]);
-
   return (
-    <section className='sectionPadding'>
+    <section className="sectionPadding">
       <Container>
-        <PageTitle title={"All Scholarships"} />
+        <PageTitle title="All Scholarships" />
 
-        <div className='flex flex-col pb-6 md:flex-row md:justify-between'>
-          <SectionTitle sectionName={`Total Scholarships: ${filteredScholarships.length}`} customStyle={"text-start md:text-3xl!"}></SectionTitle>
+        <div className="flex flex-col pb-6 md:flex-row md:justify-between">
+          <SectionTitle
+            sectionName={`Total Scholarships: ${filteredScholarships.length}`}
+            customStyle="text-start md:text-3xl!"
+          />
 
-          <div className='flex flex-col gap-4 md:flex-row'>
+          <div className="flex flex-col gap-4 md:flex-row">
             {/* Search */}
-            <input onChange={(e) => setSearchedText(e.target.value)} type="text" placeholder="Search..." className="input input-bordered lg:w-[200px]" />
+            <input
+              type="text"
+              placeholder="Search..."
+              className="input input-bordered lg:w-[260px]"
+              onChange={(e) => setSearchedText(e.target.value)}
+            />
 
-            {/* Filter */}
-            <div className="relative lg:w-[220px]">
-  {/* Select Button */}
-  <button
-    onClick={() => setIsOpen(!isOpen)}
-    className="w-full flex justify-between items-center border border-gray-300 px-4 py-2 rounded-md bg-white"
-  >
-    <span>{selectedFilter || "Filter By"}</span>
-    <span>▾</span>
-  </button>
+            {/* Custom Select Filter */}
+            <div className="relative lg:w-[260px]">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex justify-between items-center border border-gray-300 px-4 py-2 rounded-md bg-white"
+              >
+                <span>{selectedFilter || "Filter By"}</span>
+                <span>▾</span>
+              </button>
 
-  {/* Dropdown */}
-  {isOpen && (
-    <div className="absolute top-full left-0 w-full bg-white border shadow-lg z-50">
-      {Object.keys(filterOptions).map(group => (
-        <div
-          key={group}
-          className="relative group border-b last:border-b-0"
-          onMouseEnter={() => setActiveGroup(group)}
-        >
-          {/* Main option */}
-          <div className="px-4 py-2 font-semibold hover:bg-gray-100 cursor-pointer flex justify-between">
-            {group}
-            <span>›</span>
-          </div>
+              {isOpen && (
+                <div className="absolute top-12 left-0 w-full bg-white border shadow-lg z-50">
+                  {Object.keys(filterOptions).map(group => (
+                    <div
+                      key={group}
+                      className="relative border-b"
+                      onMouseEnter={() => setActiveGroup(group)}
+                    >
+                      {/* Filter Name */}
+                      <div onClick={() => {
+                        if (group === "All Scholarships") {
+                          setSelectedFilter("");
+                          setIsOpen(false);
+                          setActiveGroup("")
+                        }
+                      }} className="px-4 py-2 font-semibold cursor-pointer hover:bg-primary hover:text-white flex justify-between">
+                        {group}
+                        <span>›</span>
+                      </div>
 
-          {/* Nested options */}
-          {activeGroup === group && (
-            <div className="absolute top-0 right-full w-56 bg-white border shadow-lg">
-              {filterOptions[group].map(option => (
-                <div
-                  key={option}
-                  onClick={() => {
-                    setSelectedFilter(option);
-                    setIsOpen(false);
-                    setActiveGroup(null);
-                  }}
-                  className="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer"
-                >
-                  {option}
+                      {/* Filter Options */}
+                      {activeGroup === group && (
+                        <div className="absolute top-0 right-full w-56 bg-white border shadow-lg">
+                          {filterOptions[group].map(option => (
+                            <div
+                              key={option}
+                              className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-white"
+                              onClick={() => {
+                                setSelectedFilter(option);
+                                setIsOpen(false);
+                                setActiveGroup("");
+                              }}
+                            >
+                              {option}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          )}
-        </div>
-      ))}
-    </div>
-  )}
-</div>
-
-            {/* <select
-              value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
-              className="select p-0! pl-3! lg:w-[200px]"
-            >
-              <option value="">Filter By:</option>
-              <option value="Scholarship Category">Scholarship Category</option>
-              <option value="Subject Category">Subject Category</option>
-              <option value="Location">Location</option>
-            </select> */}
-
           </div>
         </div>
 
+        {/* Scholarship Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {
-            filteredScholarships.length > 0
-              ?
+          {filteredScholarships.length > 0 ? (
+            filteredScholarships.map(
               (
-                filteredScholarships.map(({ _id, universityName, universityImage, universityCity, universityCountry, scholarshipCategory, applicationFees }, index) => (
-                  <motion.div
-                    key={_id}
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}      // triggers animation when in viewport
-                    viewport={{ once: true, amount: 0.3 }} // animate once, when 30% visible
-                    transition={{ duration: 0.45, delay: index * 0.15 }}
-                    className="overflow-hidden relative rounded-2xl bg-white shadow-xl hover:shadow-none transition-all duration-300 ease-linear"
-                  >
+                {
+                  _id,
+                  universityName,
+                  universityImage,
+                  universityCity,
+                  universityCountry,
+                  scholarshipCategory,
+                  applicationFees,
+                },
+                index
+              ) => (
+                <motion.div
+                  key={_id}
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.45, delay: index * 0.15 }}
+                  className="overflow-hidden relative rounded-2xl bg-white shadow-xl"
+                >
+                  <div className="absolute bottom-0 left-0 w-full h-2 bg-linear-to-r from-primary to-accent-content"></div>
 
-                    {/* Decorative Top Wave */}
-                    <div className="absolute bottom-0 left-0 w-full h-2 bg-linear-to-r from-primary to-accent-content"></div>
+                  <div className="absolute right-4 top-3">
+                    <span className="px-3 py-1 rounded-full text-xs bg-primary text-white">
+                      #{index + 1}
+                    </span>
+                  </div>
 
-                    {/* Floating Chip Badge */}
-                    <div className="absolute right-4 top-3">
-                      <span className="px-3 py-1 rounded-full text-xs bg-primary text-white shadow">
-                        #{index + 1}
-                      </span>
+                  <div>
+                    <div className="w-full h-48 overflow-hidden rounded-t-2xl">
+                      <Link to={`/all-scholarships/${_id}`}>
+                        <img
+                          src={universityImage}
+                          alt={universityName}
+                          className="w-full h-full object-cover hover:scale-105 transition"
+                        />
+                      </Link>
                     </div>
 
-                    {/* Content */}
-                    <div>
+                    <div className="p-4 md:px-6 md:pb-5">
+                      <h3 className="text-xl font-bold text-primary md:text-2xl">
+                        {universityName}
+                      </h3>
 
-                      {/* University Image */}
-                      <div className="w-full h-48 overflow-hidden rounded-t-2xl">
-                        <Link to={`/all-scholarships/${_id}`}>
-                          <img
-                            src={universityImage}
-                            alt={universityName}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                          />
-                        </Link>
-                      </div>
+                      <p className="font-bold">
+                        Category:
+                        <span className="text-accent-content"> {scholarshipCategory}</span>
+                      </p>
 
-                      {/* Content */}
-                      <div className="p-4 md:px-6 md:pb-5">
-                        {/* University Name */}
-                        <h3 className="text-xl font-bold text-primary md:text-2xl">
-                          {universityName}
-                        </h3>
+                      <p className="font-semibold pt-2">
+                        Application Fees:
+                        <span className="text-secondary pl-1">
+                          {applicationFees ? `$${applicationFees}` : "Free"}
+                        </span>
+                      </p>
 
-                        {/* Scholarship Category */}
-                        <p className="text-md text-primary font-bold pb-4">
-                          Category: <span className='text-accent-content'>{scholarshipCategory}</span>
-                        </p>
+                      <p className="font-semibold">
+                        Location:
+                        <span className="text-secondary pl-1">
+                          {universityCity}, {universityCountry}
+                        </span>
+                      </p>
 
-                        {/* Application Fees */}
-                        <div className="border-t border-dashed border-slate-300 pt-4 text-sm">
-                          <p className="text-base font-semibold text-primary">
-                            Application Fees:
-                            <span className='pl-1 text-secondary'>
-                              {applicationFees ? `$${applicationFees}` : "Free"}
-                            </span>
-                          </p>
-                        </div>
-
-                        {/* Location */}
-                        <p className="text-base font-semibold text-primary">
-                          Location:
-                          <span className='pl-1 text-secondary'>
-                            {universityCity}, {universityCountry}
-                          </span>
-                        </p>
-
-                        {/* View Details Button */}
-                        <div className="pt-3">
-                          <PrimaryButton
-                            path={`/all-scholarships/${_id}`}
-                            buttonName="View Details"
-                            customStyling="bg-primary text-white hover:bg-accent-content rounded-lg px-4 py-2"
-                          />
-                        </div>
+                      <div className="pt-3">
+                        <PrimaryButton
+                          path={`/all-scholarships/${_id}`}
+                          buttonName="View Details"
+                        />
                       </div>
                     </div>
-
-                  </motion.div>
-                )
-                )
+                  </div>
+                </motion.div>
               )
-              :
-              (
-                <SectionTitle sectionName={"No scholarships found"} customStyle="text-center col-span-12 text-lg! text-gray-500 mt-12" />
-              )
-          }
+            )
+          ) : (
+            <SectionTitle
+              sectionName="No scholarships found"
+              customStyle="text-center col-span-12 text-gray-500"
+            />
+          )}
         </div>
       </Container>
     </section>
