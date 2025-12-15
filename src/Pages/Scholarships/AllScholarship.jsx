@@ -103,7 +103,7 @@ const AllScholarship = () => {
 
               {isOpen && (
                 <div className="absolute top-12 left-0 w-full bg-white border shadow-lg z-50">
-                  {Object.keys(filterOptions).map(group => (
+                  {Object.keys(filterOptions)?.map(group => (
                     <div
                       key={group}
                       className="relative border-b"
@@ -124,7 +124,7 @@ const AllScholarship = () => {
                       {/* Filter Options */}
                       {activeGroup === group && (
                         <div className="absolute top-0 right-full w-56 bg-white border shadow-lg">
-                          {filterOptions[group].map(option => (
+                          {filterOptions[group]?.map(option => (
                             <div
                               key={option}
                               className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-white"
@@ -150,7 +150,7 @@ const AllScholarship = () => {
         {/* Scholarship Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredScholarships.length > 0 ? (
-            filteredScholarships.map(
+            filteredScholarships?.map(
               (
                 {
                   _id,
@@ -171,6 +171,8 @@ const AllScholarship = () => {
                   transition={{ duration: 0.45, delay: index * 0.15 }}
                   className="overflow-hidden relative rounded-2xl bg-white shadow-xl"
                 >
+
+                  {/* Designed Border */}
                   <div className="absolute bottom-0 left-0 w-full h-2 bg-linear-to-r from-primary to-accent-content"></div>
 
                   <div className="absolute right-4 top-3">

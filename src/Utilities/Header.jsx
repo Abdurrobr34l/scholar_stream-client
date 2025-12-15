@@ -40,7 +40,7 @@ const Header = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-2 w-60 px-5 py-4 shadow gap-3 right-4"
             >
-              {navigationLinks.map(({ id, path, pathName }) => (
+              {navigationLinks?.map(({ id, path, pathName }) => (
                 <li key={id}>
                   <NavLink to={path} className="navlink text-md">
                     {pathName}
@@ -71,7 +71,7 @@ const Header = () => {
         {/* Navigation Menu */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal gap-6">
-            {navigationLinks.map(({ id, path, pathName }) => (
+            {navigationLinks?.map(({ id, path, pathName }) => (
               <li key={id}>
                 <NavLink to={path} className="navlink">
                   {pathName}

@@ -17,7 +17,7 @@ const TopScholarships = () => {
         <SectionTitle sectionName={<>Top <span className="text-accent-content">Scholarships</span></>} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
-          {data.slice(0, 6).map(({ _id, scholarshipName, universityName, applicationFees, applicationDeadline }, index) => (
+          {data.slice(0, 6)?.map(({ _id, scholarshipName, universityName, applicationFees, applicationDeadline }, index) => (
             <motion.div
               key={_id}
               initial={{ opacity: 0, y: 25 }}
@@ -52,7 +52,7 @@ const TopScholarships = () => {
 
                 {/* Fee*/}
                 <div className="border-t border-dashed border-slate-300 pt-4 grid grid-cols-2 gap-y-2 text-sm">
-                  <h4 className="text-xl font-semibold">Fee: <span>{applicationFees}</span></h4>
+                  <h4 className="text-xl font-semibold">Fee: <span className="text-accent">{applicationFees}</span></h4>
                 </div>
 
                 {/* Description */}

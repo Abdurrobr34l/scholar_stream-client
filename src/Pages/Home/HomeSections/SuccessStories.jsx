@@ -90,7 +90,7 @@ const SuccessStories = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
               {successStories
                 .slice(index, index + 2)
-                .map(({ id, avatar, name, course, university, message }) => (
+                ?.map(({ id, avatar, name, course, university, message }) => (
                   <motion.div
                     key={id}
                     initial={{ opacity: 0, x: 40 }}

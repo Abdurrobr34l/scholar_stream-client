@@ -1,7 +1,8 @@
 import React from "react";
 import Container from "./Container";
 import { Link } from "react-router";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { BsTwitterX } from "react-icons/bs";
 import Logo from "./Logo";
 
 const Footer = () => {
@@ -21,7 +22,7 @@ const Footer = () => {
               <FaFacebook />
             </Link>
             <Link to="/" className="text-2xl transition-colors duration-300 ease-linear hover:text-accent">
-              <FaTwitter />
+              <BsTwitterX />
             </Link>
             <Link to="/" className="text-2xl transition-colors duration-300 ease-linear hover:text-accent">
               <FaInstagram />
