@@ -1,11 +1,10 @@
 import React from 'react';
-import { Outlet } from 'react-router';
+import DashboardSidebar from '../Pages/Dashboard.jsx/DashboardSidebar';
 
 const DashboardLayout = () => {
   return (
     <div>
-      DashboardLayout
-      <Outlet></Outlet>
+      <DashboardSidebar />
     </div>
   );
 };
