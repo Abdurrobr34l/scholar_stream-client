@@ -6,6 +6,9 @@ import Register from "../Pages/AuthenicationPages/Register";
 import Login from "../Pages/AuthenicationPages/Login";
 import AllScholarship from "../Pages/Scholarships/AllScholarship";
 import ScholarshipDetail from "../Pages/Scholarships/ScholarshipDetail";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import PaymentSuccess from "../Pages/Dashboard.jsx/PaymentSuccess";
+import PaymentCancelled from "../Pages/Dashboard.jsx/PaymentCancelled";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -40,6 +43,22 @@ export const router = createBrowserRouter([
         path: "*",
         Component: ErrorPage404
       }
+    ]
+  },
+
+  //* DASHBOARD ROUTES
+  {
+    path: "dashboard",
+    Component: DashboardLayout,
+    children: [
+      {
+        path: "payment-success",
+        Component: PaymentSuccess
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancelled
+      },
     ]
   }
 ])

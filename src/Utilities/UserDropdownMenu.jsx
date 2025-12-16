@@ -36,7 +36,7 @@ const UserDropdownMenu = ({ user }) => {
         {/* Dashboard */}
         <li>
           <Link
-            to="/dashboard"
+            to="dashboard"
             className="text-base text-primary font-semibold hover:text-accent hover:bg-transparent"
           >
             Dashboard
