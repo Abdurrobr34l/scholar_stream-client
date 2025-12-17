@@ -50,6 +50,7 @@ const DashboardSidebar = () => {
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
+      {/* Navigation Bar */}
       <div className="drawer-content">
         {/* Navbar */}
         <nav className="navbar w-full bg-base-200 bg-none! hover:bg-none! pl-6">
@@ -57,10 +58,12 @@ const DashboardSidebar = () => {
             <GoSidebarCollapse />
           </label>
 
+          {/* Logo */}
           <div className="py-4 px-6">
             <Logo />
           </div>
 
+          {/* User Proflie */}
           <div className="hidden absolute right-0 md:flex items-center gap-4 p-4 mr-10">
             {/* Profile Image */}
             <div className="avatar">
@@ -96,6 +99,7 @@ const DashboardSidebar = () => {
         </div>
       </div>
 
+      {/* Sidebar */}
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
 

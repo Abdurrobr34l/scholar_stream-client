@@ -9,15 +9,15 @@ import SectionTitle from '../../Utilities/SectionTitle';
 import useScholarshipReviews from '../../Hooks/useScholarshipReviews';
 import useAxios from '../../Hooks/useAxios';
 import LoadingSpinner from '../../Utilities/LoadingSpinner';
+import useAuth from '../../Hooks/useAuth';
 
 const ScholarshipDetail = () => {
   const { id } = useParams();
   const [scholarship, setScholarship] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const { data: reviews, isLoading: reviewsLoading, error: reviewsError } = useScholarshipReviews(id);
-
   const axiosSecure = useAxios();
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchScholarship = async () => {
@@ -35,6 +35,23 @@ const ScholarshipDetail = () => {
 
   if (loading) return <LoadingSpinner />;
   if (!scholarship) return <p>Scholarship not found!</p>;
+
+  const handleApply = async () => {
+    try {
+      const res = await axiosSecure.post("/create-checkout-session", {
+        scholarshipId: scholarship._id,
+        userId: user?.uid,
+        userName: user?.displayName,
+        userEmail: user?.email,
+        applicationFees: scholarship.applicationFees,
+      });
+
+      // Redirect to Stripe Checkout
+      window.location.href = res.data.url;
+    } catch (error) {
+      console.error("Checkout error:", error);
+    }
+  };
 
   return (
     <Container className="sectionPadding">
@@ -93,7 +110,8 @@ const ScholarshipDetail = () => {
             <div className="text-center mt-6">
               <button
                 className="px-5 py-2.5 rounded-lg font-semibold shadow-soft bg-primary text-white transition-colors duration-300 ease-linear hover:bg-accent hover:text-primary"
-                onClick={() => window.location.href = "/checkout"} // Redirect to checkout/payment
+                // onClick={() => window.location.href = "/checkout"} // Redirect to checkout/payment
+                onClick={handleApply}
               >
                 Apply for Scholarship
               </button>
