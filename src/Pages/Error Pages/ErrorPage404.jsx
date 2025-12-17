@@ -1,14 +1,18 @@
 import React from 'react';
 import notFoundImg from '../../assets/404.png';
 // import { HeadProvider } from 'react-head';
-import { Link } from 'react-router';
-import PrimaryButton from '../../Utilities/PrimaryButton';
+import { Link, useLocation } from 'react-router';
+// import PrimaryButton from '../../Utilities/PrimaryButton';
 import PageTitle from '../../Utilities/PageTitle';
+import SecondaryButton from '../../Utilities/SecondaryButton';
 
 const ErrorPage = () => {
+  const location = useLocation();
+  const isDashboardRoute = location.pathname.startsWith('/dashboard');
+
   return (
     <>
-<PageTitle title="Error 404"/>
+      <PageTitle title="Error 404" />
 
       <section className="flex flex-col items-center justify-center min-h-screen gap-6 py-10 text-center bg-white">
         {/* 404 Image */}
@@ -33,7 +37,12 @@ const ErrorPage = () => {
         </p>
 
         {/* Go Home Button */}
-        <PrimaryButton path="/" buttonName="Go to Home"></PrimaryButton>
+        {/* <PrimaryButton path="/" buttonName="Go to Home"></PrimaryButton> */}
+        <SecondaryButton
+          path={isDashboardRoute ? "/dashboard" : "/"}
+          buttonName={isDashboardRoute ? "Go to Dashboard" : "Go to Home"}
+        />
+
       </section>
     </>
   );

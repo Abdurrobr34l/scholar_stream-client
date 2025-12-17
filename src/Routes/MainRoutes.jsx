@@ -59,6 +59,11 @@ export const router = createBrowserRouter([
         path: "payment-cancelled",
         Component: PaymentCancelled
       },
+      //* ERROR PAGE ROUTE
+      {
+        path: "*",
+        Component: ErrorPage404
+      }
     ]
   }
 ])
