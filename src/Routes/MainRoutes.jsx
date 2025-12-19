@@ -9,6 +9,7 @@ import ScholarshipDetail from "../Pages/Scholarships/ScholarshipDetail";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import PaymentSuccess from "../Pages/Dashboard.jsx/PaymentSuccess";
 import PaymentCancelled from "../Pages/Dashboard.jsx/PaymentCancelled";
+import MyProfile from "../Pages/Dashboard.jsx/MyProfile/MyProfile";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
     path: "dashboard",
     Component: DashboardLayout,
     children: [
+      {
+        path: "my-profile",
+        Component: MyProfile
+      },
       {
         path: "payment-success",
         Component: PaymentSuccess

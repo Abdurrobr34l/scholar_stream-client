@@ -2,11 +2,10 @@ import React from 'react';
 import { Link, Outlet } from 'react-router';
 import Logo from '../../Utilities/Logo';
 import { GoSidebarCollapse } from "react-icons/go";
-import { FaUser, FaUsers, FaPlusCircle, FaList, FaChartBar, FaClipboardList, FaStar, FaHome } from 'react-icons/fa';
+import { FaUsers, FaPlusCircle, FaList, FaChartBar, FaClipboardList, FaStar, FaHome } from 'react-icons/fa';
 import { ImProfile } from "react-icons/im";
 import useAuth from '../../Hooks/useAuth';
 import useUserRole from '../../Hooks/useUserRole';
-import UserDropdownMenu from '../../Utilities/UserDropdownMenu';
 
 const DashboardSidebar = () => {
   const { user } = useAuth();
@@ -21,7 +20,7 @@ const DashboardSidebar = () => {
     Admin: {
       links: [
         { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
-        { name: "My Profile", icon: <ImProfile />, path: "/dashboard/profile" },
+        { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
         { name: "Add Scholarship", icon: <FaPlusCircle />, path: "/dashboard/add-scholarship" },
         { name: "Manage Scholarships", icon: <FaList />, path: "/dashboard/manage-scholarships" },
         { name: "Manage Users", icon: <FaUsers />, path: "/dashboard/manage-users" },
@@ -31,7 +30,7 @@ const DashboardSidebar = () => {
     Moderator: {
       links: [
         { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
-        { name: "My Profile", icon: <ImProfile />, path: "/dashboard/profile" },
+        { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
         { name: "Manage Applications", icon: <FaClipboardList />, path: "/dashboard/manage-applications" },
         { name: "All Reviews", icon: <FaStar />, path: "/dashboard/all-reviews" },
       ],
@@ -39,7 +38,7 @@ const DashboardSidebar = () => {
     Student: {
       links: [
         { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
-        { name: "My Profile", icon: <ImProfile />, path: "/dashboard/profile" },
+        { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
         { name: "My Applications", icon: <FaClipboardList />, path: "/dashboard/my-applications" },
         { name: "My Reviews", icon: <FaStar />, path: "/dashboard/my-reviews" },
       ],
