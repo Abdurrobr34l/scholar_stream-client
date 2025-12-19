@@ -45,6 +45,9 @@ body {
 .sectionPadding {
   @apply py-8 md:py-12 lg:py-16 xl:py-20;
 }
+.sectionMargin {
+  @apply my-8 md:my-12 lg:my-16 xl:my-20;
+}
 .navlink {
   @apply p-0 font-semibold text-primary hover:text-accent hover:bg-transparent!;
 }
