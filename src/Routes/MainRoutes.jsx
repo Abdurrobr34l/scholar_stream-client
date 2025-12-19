@@ -10,6 +10,8 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import PaymentSuccess from "../Pages/Dashboard.jsx/PaymentSuccess";
 import PaymentCancelled from "../Pages/Dashboard.jsx/PaymentCancelled";
 import MyProfile from "../Pages/Dashboard.jsx/MyProfile/MyProfile";
+import MyApplications from "../Pages/Dashboard.jsx/UserPages/MyApplications";
+import MyReviews from "../Pages/Dashboard.jsx/UserPages/MyReviews";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -52,10 +54,21 @@ export const router = createBrowserRouter([
     path: "dashboard",
     Component: DashboardLayout,
     children: [
+      //todo ALL ROLE PROFILE ROUTE
       {
         path: "my-profile",
         Component: MyProfile
       },
+      //todo USER ALL PAGES ROUTES
+      {
+        path: "my-applications",
+        Component: MyApplications
+      },
+      {
+        path: "my-reviews",
+        Component: MyReviews
+      },
+      //todo PAYMENT ROUTES
       {
         path: "payment-success",
         Component: PaymentSuccess
