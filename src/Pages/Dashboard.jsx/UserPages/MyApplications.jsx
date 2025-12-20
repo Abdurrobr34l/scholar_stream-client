@@ -16,7 +16,7 @@ const MyApplications = () => {
 
   const [selectedApp, setSelectedApp] = useState(null);
   const [reviewData, setReviewData] = useState({ rating: 0, comment: "" });
-  const [editData, setEditData] = useState({ subjectCategory: "", applicationFees: "" });
+  const [editData, setEditData] = useState({ degree: "", applicationFees: "" });
 
   const detailsModalRef = useRef();
   const editModalRef = useRef();
@@ -24,17 +24,17 @@ const MyApplications = () => {
 
   // Fetch applications using React Query
   const { data: applications = [], isLoading, isError } = useQuery({
-  queryKey: ["applications", user?.email],
-  queryFn: async () => {
-    if (!user?.email) return [];
-    const res = await axiosSecure.get(`/applications/user/${user.email}`);
-    return res.data;
-  },
-  enabled: !!user?.email,
-});
+    queryKey: ["applications", user?.email],
+    queryFn: async () => {
+      if (!user?.email) return [];
+      const res = await axiosSecure.get(`/applications/user/${user.email}`);
+      return res.data;
+    },
+    enabled: !!user?.email,
+  });
 
 
-  if (isLoading) return <LoadingSpinner/>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <p className="text-center mt-10 text-red-500">Failed to load applications</p>;
 
   // DELETE
@@ -62,22 +62,22 @@ const MyApplications = () => {
   };
 
   // PAYMENT
-const handlePayment = async (app) => {
-  try {
-    const res = await axiosSecure.post("/create-checkout-session", {
-      scholarshipId: app.scholarshipId,
-      userId: app.userId,
-      userName: user.displayName,
-      userEmail: user.email,
-      applicationFees: app.applicationFees,
-    });
+  const handlePayment = async (app) => {
+    try {
+      const res = await axiosSecure.post("/create-checkout-session", {
+        scholarshipId: app.scholarshipId,
+        userId: app.userId,
+        userName: user.displayName,
+        userEmail: user.email,
+        applicationFees: app.applicationFees,
+      });
 
-    window.location.href = res.data.url;
-  } catch (err) {
-    console.error(err);
-    toast.error("Failed to start payment");
-  }
-};
+      window.location.href = res.data.url;
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to start payment");
+    }
+  };
 
 
   // OPEN MODALS
@@ -86,14 +86,15 @@ const handlePayment = async (app) => {
     detailsModalRef.current.showModal();
   };
 
-  // const openEditModal = (app) => {
-  //   setSelectedApp(app);
-  //   setEditData({
-  //     subjectCategory: app.subjectCategory || "",
-  //     applicationFees: app.applicationFees || "",
-  //   });
-  //   editModalRef.current.showModal();
-  // };
+  const openEditModal = (app) => {
+    setSelectedApp(app);
+    setEditData({
+      degree: app.degree || "",
+      applicationFees: app.applicationFees || "",
+    });
+    editModalRef.current.showModal();
+  };
+
 
   const openReviewModal = (app) => {
     setSelectedApp(app);
@@ -174,17 +175,16 @@ const handlePayment = async (app) => {
                   {app.universityCity}, {app.universityCountry}
                 </td>
                 <td>{app.feedback || "N/A"}</td>
-                <td>{app.subjectCategory}</td>
+                <td>{app.degree}</td>
                 <td>${app.applicationFees}</td>
                 <td>
                   <span
-                    className={`badge flex flex-col my-2 ${
-                      app.applicationStatus === "pending"
-                        ? "badge-warning"
-                        : app.applicationStatus === "submitted"
+                    className={`badge flex flex-col my-2 ${app.applicationStatus === "pending"
+                      ? "badge-warning"
+                      : app.applicationStatus === "submitted"
                         ? "badge-info"
                         : "badge-success"
-                    }`}
+                      }`}
                   >
                     {app.applicationStatus}
                   </span>
@@ -203,7 +203,7 @@ const handlePayment = async (app) => {
                     <>
                       <button
                         className="btn btn-warning btn-sm"
-                        // onClick={() => openEditModal(app)}
+                        onClick={() => openEditModal(app)}
                       >
                         <FaEdit />
                       </button>
@@ -257,7 +257,7 @@ const handlePayment = async (app) => {
                 {selectedApp.universityCountry}
               </p>
               <p>
-                <strong>Category:</strong> {selectedApp.subjectCategory}
+                <strong>Category:</strong> {selectedApp.degree}
               </p>
               <p>
                 <strong>Fees:</strong> ${selectedApp.applicationFees}
@@ -290,32 +290,44 @@ const handlePayment = async (app) => {
           <h3 className="font-poppins text-xl font-semibold mb-4 text-primary">
             Edit Application
           </h3>
-          <input
-            className="input input-bordered w-full mb-2 focus:border-accent focus:ring-accent"
-            placeholder="Category"
-            value={editData.subjectCategory}
+
+          {/* Degree */}
+          <select
+            className="select select-bordered w-full mb-3"
+            value={editData.degree}
             onChange={(e) =>
-              setEditData((prev) => ({ ...prev, subjectCategory: e.target.value }))
+              setEditData((prev) => ({ ...prev, degree: e.target.value }))
             }
-          />
+          >
+            <option value="">Select Degree</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Bachelor">Bachelor</option>
+            <option value="Masters">Masters</option>
+          </select>
+
+          {/* Application Fees */}
           <input
-            className="input input-bordered w-full mb-2 focus:border-accent focus:ring-accent"
-            placeholder="Fees"
             type="number"
+            className="input input-bordered w-full mb-4"
+            placeholder="Application Fees"
             value={editData.applicationFees}
             onChange={(e) =>
-              setEditData((prev) => ({ ...prev, applicationFees: e.target.value }))
+              setEditData((prev) => ({
+                ...prev,
+                applicationFees: Number(e.target.value),
+              }))
             }
           />
+
           <div className="modal-action">
             <button
-              className="btn btn-accent btn-sm text-white hover:bg-accent/90"
+              className="btn btn-accent btn-sm text-white"
               onClick={submitEdit}
             >
               Save
             </button>
             <button
-              className="btn btn-outline btn-sm text-primary hover:bg-primary/10"
+              className="btn btn-outline btn-sm"
               onClick={() => editModalRef.current.close()}
             >
               Cancel
@@ -325,7 +337,7 @@ const handlePayment = async (app) => {
       </dialog>
 
       {/* REVIEW MODAL */}
-      {/* <dialog ref={reviewModalRef} className={modalBaseClass}>
+      <dialog ref={reviewModalRef} className={modalBaseClass}>
         <div className={modalBoxClass}>
           <h3 className="font-poppins text-xl font-semibold mb-4 text-primary">
             Add Review for <span className="text-accent">{selectedApp?.scholarshipName}</span>
@@ -335,9 +347,8 @@ const handlePayment = async (app) => {
             {[1, 2, 3, 4, 5].map((star) => (
               <FaStar
                 key={star}
-                className={`cursor-pointer text-3xl ${
-                  reviewData.rating >= star ? "text-accent" : "text-gray-300"
-                } hover:scale-125 transition-transform`}
+                className={`cursor-pointer text-3xl ${reviewData.rating >= star ? "text-accent" : "text-gray-300"
+                  } hover:scale-125 transition-transform`}
                 onClick={() =>
                   setReviewData((prev) => ({ ...prev, rating: star }))
                 }
@@ -369,7 +380,7 @@ const handlePayment = async (app) => {
             </button>
           </div>
         </div>
-      </dialog> */}
+      </dialog>
     </motion.div>
   );
 };

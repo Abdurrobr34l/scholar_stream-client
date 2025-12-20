@@ -11,7 +11,7 @@ const useScholarshipReviews = (scholarshipId) => {
       const res = await axiosSecure.get(`/reviews/${scholarshipId}`);
       return res.data;
     },
-    enabled: !!scholarshipId, // only fetch if ID exists
+    enabled: !!scholarshipId,
   });
 };
 
