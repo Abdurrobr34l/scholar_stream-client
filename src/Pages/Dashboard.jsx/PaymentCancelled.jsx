@@ -4,6 +4,7 @@ import useAxios from "../../Hooks/useAxios";
 import useAuth from "../../Hooks/useAuth";
 import { motion } from "framer-motion";
 import SecondaryButton from "../../Utilities/SecondaryButton";
+import PrimaryButton from "../../Utilities/PrimaryButton";
 
 const PaymentCancelled = () => {
   const axiosSecure = useAxios();
@@ -55,7 +56,16 @@ const PaymentCancelled = () => {
         )}
 
         {/* Action Button */}
-        <SecondaryButton buttonName={"Return to Dashboard"} path={"/dashboard"} />
+        <div className="flex gap-3">
+          <PrimaryButton
+            buttonName="Go to All Scholarships"
+            path="/dashboard/all-scholarships"
+          />
+          <SecondaryButton
+            buttonName="Go to My Applications"
+            path="/dashboard/my-applications"
+          />
+        </div>
       </div>
     </motion.div>
   );

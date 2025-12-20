@@ -43,6 +43,8 @@ const MyApplications = () => {
       title: "Are you sure?",
       text: "This application will be deleted permanently!",
       icon: "warning",
+      confirmButtonColor: "#06b6d4",
+      cancelButtonColor: "#d33",
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
     });
@@ -60,26 +62,23 @@ const MyApplications = () => {
   };
 
   // PAYMENT
-  const handlePayment = async (app) => {
-    const result = await Swal.fire({
-      title: "Confirm Payment",
-      text: `Pay $${app.applicationFees}?`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Yes, pay now!",
+const handlePayment = async (app) => {
+  try {
+    const res = await axiosSecure.post("/create-checkout-session", {
+      scholarshipId: app.scholarshipId,
+      userId: app.userId,
+      userName: user.displayName,
+      userEmail: user.email,
+      applicationFees: app.applicationFees,
     });
 
-    if (result.isConfirmed) {
-      try {
-        await axiosSecure.post(`/applications/pay/${app._id}`);
-        queryClient.invalidateQueries(["applications", user?.email]);
-        toast.success("Payment successful!");
-      } catch (err) {
-        console.error(err);
-        toast.error("Payment failed!");
-      }
-    }
-  };
+    window.location.href = res.data.url;
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to start payment");
+  }
+};
+
 
   // OPEN MODALS
   const openDetailsModal = (app) => {
@@ -87,14 +86,14 @@ const MyApplications = () => {
     detailsModalRef.current.showModal();
   };
 
-  const openEditModal = (app) => {
-    setSelectedApp(app);
-    setEditData({
-      subjectCategory: app.subjectCategory || "",
-      applicationFees: app.applicationFees || "",
-    });
-    editModalRef.current.showModal();
-  };
+  // const openEditModal = (app) => {
+  //   setSelectedApp(app);
+  //   setEditData({
+  //     subjectCategory: app.subjectCategory || "",
+  //     applicationFees: app.applicationFees || "",
+  //   });
+  //   editModalRef.current.showModal();
+  // };
 
   const openReviewModal = (app) => {
     setSelectedApp(app);
@@ -179,7 +178,7 @@ const MyApplications = () => {
                 <td>${app.applicationFees}</td>
                 <td>
                   <span
-                    className={`badge ${
+                    className={`badge flex flex-col my-2 ${
                       app.applicationStatus === "pending"
                         ? "badge-warning"
                         : app.applicationStatus === "submitted"
@@ -204,7 +203,7 @@ const MyApplications = () => {
                     <>
                       <button
                         className="btn btn-warning btn-sm"
-                        onClick={() => openEditModal(app)}
+                        // onClick={() => openEditModal(app)}
                       >
                         <FaEdit />
                       </button>
@@ -326,7 +325,7 @@ const MyApplications = () => {
       </dialog>
 
       {/* REVIEW MODAL */}
-      <dialog ref={reviewModalRef} className={modalBaseClass}>
+      {/* <dialog ref={reviewModalRef} className={modalBaseClass}>
         <div className={modalBoxClass}>
           <h3 className="font-poppins text-xl font-semibold mb-4 text-primary">
             Add Review for <span className="text-accent">{selectedApp?.scholarshipName}</span>
@@ -370,7 +369,7 @@ const MyApplications = () => {
             </button>
           </div>
         </div>
-      </dialog>
+      </dialog> */}
     </motion.div>
   );
 };

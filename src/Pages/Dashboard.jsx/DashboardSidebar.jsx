@@ -6,13 +6,14 @@ import { FaUsers, FaPlusCircle, FaList, FaChartBar, FaClipboardList, FaStar, FaH
 import { ImProfile } from "react-icons/im";
 import useAuth from '../../Hooks/useAuth';
 import useUserRole from '../../Hooks/useUserRole';
+import LoadingSpinner from '../../Utilities/LoadingSpinner';
 
 const DashboardSidebar = () => {
   const { user } = useAuth();
   const { role, loading } = useUserRole(user?.email);
 
   if (loading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
+    return <LoadingSpinner/>;
   }
 
   // Role Based Links
