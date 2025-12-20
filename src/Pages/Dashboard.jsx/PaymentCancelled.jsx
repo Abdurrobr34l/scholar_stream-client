@@ -59,7 +59,7 @@ const PaymentCancelled = () => {
         <div className="flex gap-3">
           <PrimaryButton
             buttonName="Go to All Scholarships"
-            path="/dashboard/all-scholarships"
+            path="/all-scholarships"
           />
           <SecondaryButton
             buttonName="Go to My Applications"
