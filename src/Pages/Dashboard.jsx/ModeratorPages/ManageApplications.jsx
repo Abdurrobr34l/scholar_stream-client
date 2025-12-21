@@ -47,11 +47,11 @@ const ManageApplications = () => {
   return (
     <div>
       <PageTitle title="Manage Applications" />
-      <SectionTitle sectionName={`Applications: ${applications.length}`} customStyle="text-start"/>
+      <SectionTitle sectionName={`Applications: ${applications.length}`} customStyle="text-start" />
 
       <div className="overflow-x-auto">
-        <table className="table w-full bg-white shadow">
-          <thead>
+        <table className="table w-full min-w-[700px] bg-white shadow-md rounded-lg">
+          <thead className="bg-gray-100">
             <tr>
               <th>Name</th>
               <th>Email</th>
@@ -64,67 +64,38 @@ const ManageApplications = () => {
           </thead>
 
           <tbody>
-            {applications.map(application => (
-              <tr key={application._id}>
-                <td>{application.userName}</td>
-                <td>{application.userEmail}</td>
-                <td>{application.universityName}</td>
-                <td>{application.feedback || "—"}</td>
-
-                <td>
+            {applications.map((application) => (
+              <tr key={application._id} className="hover:bg-gray-50">
+                <td className="whitespace-nowrap">{application.userName}</td>
+                <td className="whitespace-nowrap">{application.userEmail}</td>
+                <td className="whitespace-nowrap">{application.universityName}</td>
+                <td className="max-w-xs truncate">{application.feedback || "—"}</td>
+                <td className="whitespace-nowrap">
                   <select
                     value={application.applicationStatus}
-                    className="select select-sm p-0! pl-4! h-10!"
-                    onChange={(e) =>
-                      updateStatus(application._id, e.target.value)
-                    }
+                    className="select select-sm w-full max-w-[120px]"
+                    onChange={(e) => updateStatus(application._id, e.target.value)}
                   >
                     <option value="processing">Processing</option>
                     <option value="completed">Completed</option>
                     <option value="rejected">Rejected</option>
                   </select>
                 </td>
-
-                <td>
+                <td className="whitespace-nowrap">
                   <span
-                    className={`badge ${
-                      application.paymentStatus === "paid"
-                        ? "badge-success"
-                        : "badge-error"
-                    }`}
+                    className={`badge ${application.paymentStatus === "paid" ? "badge-success" : "badge-error"}`}
                   >
                     {application.paymentStatus}
                   </span>
                 </td>
-
-                <td className="flex gap-2">
-                  <button
-                    className="btn btn-info btn-sm"
-                    onClick={() => {
-                      setSelectedApp(application);
-                      detailsModalRef.current.showModal();
-                    }}
-                  >
+                <td className="flex flex-wrap gap-1 justify-center">
+                  <button className="btn btn-info btn-sm" onClick={() => { setSelectedApp(application); detailsModalRef.current.showModal(); }}>
                     <FaEye />
                   </button>
-
-                  <button
-                    className="btn btn-warning btn-sm"
-                    onClick={() => {
-                      setSelectedApp(application);
-                      setFeedback(application.feedback || "");
-                      feedbackModalRef.current.showModal();
-                    }}
-                  >
+                  <button className="btn btn-warning btn-sm" onClick={() => { setSelectedApp(application); setFeedback(application.feedback || ""); feedbackModalRef.current.showModal(); }}>
                     <FaCommentDots />
                   </button>
-
-                  <button
-                    className="btn btn-error btn-sm"
-                    onClick={() =>
-                      updateStatus(application._id, "rejected")
-                    }
-                  >
+                  <button className="btn btn-error btn-sm" onClick={() => updateStatus(application._id, "rejected")}>
                     <FaTimes />
                   </button>
                 </td>
@@ -133,6 +104,7 @@ const ManageApplications = () => {
           </tbody>
         </table>
       </div>
+
 
       {/* DETAILS MODAL */}
       <dialog ref={detailsModalRef} className="modal">

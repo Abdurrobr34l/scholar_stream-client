@@ -36,38 +36,36 @@ const AllReviews = () => {
   return (
     <div>
       <PageTitle title="All Reviews" />
-      <SectionTitle sectionName={`Reviews: ${reviews.length}`} customStyle="text-start"/>
+      <SectionTitle sectionName={`Reviews: ${reviews.length}`} customStyle="text-start" />
 
-      <table className="table w-full bg-white shadow">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>University</th>
-            <th>Comment</th>
-            <th>Rating</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {reviews.map(review => (
-            <tr key={review._id}>
-              <td>{review.userName}</td>
-              <td>{review.universityName}</td>
-              <td>{review.reviewComment}</td>
-              <td>{review.ratingPoint}/5</td>
-              <td>
-                <button
-                  className="btn btn-error btn-sm"
-                  onClick={() => deleteReview(review._id)}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="table w-full min-w-[600px] bg-white shadow-md rounded-lg">
+          <thead className="bg-gray-100">
+            <tr>
+              <th>User</th>
+              <th>University</th>
+              <th>Comment</th>
+              <th>Rating</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {reviews.map((review) => (
+              <tr key={review._id} className="hover:bg-gray-50">
+                <td className="whitespace-nowrap">{review.userName}</td>
+                <td className="whitespace-nowrap">{review.universityName}</td>
+                <td className="max-w-xs truncate">{review.reviewComment}</td>
+                <td className="whitespace-nowrap">{review.ratingPoint}/5</td>
+                <td className="flex justify-center">
+                  <button className="btn btn-error btn-sm" onClick={() => deleteReview(review._id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
