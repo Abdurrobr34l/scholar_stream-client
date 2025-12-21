@@ -32,8 +32,8 @@ const DashboardSidebar = () => {
       links: [
         // { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
         { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
-        { name: "Manage Applications", icon: <FaClipboardList />, path: "/dashboard/manage-applications" },
-        { name: "All Reviews", icon: <FaStar />, path: "/dashboard/all-reviews" },
+        { name: "Manage Applications", icon: <FaClipboardList />, path: "/dashboard/moderator/manage-applications" },
+        { name: "All Reviews", icon: <FaStar />, path: "/dashboard/moderator/all-reviews" },
       ],
     },
     Student: {
@@ -84,7 +84,7 @@ const DashboardSidebar = () => {
               <h3 className="font-semibold text-base">
                 {user?.displayName || "Anonymous User"}
               </h3>
-              <p className="text-md font-semibold capitalize text-accent">
+              <p className="text-md font-semibold capitalize text-accent-content">
                 {role}
               </p>
             </div>

@@ -12,6 +12,8 @@ import PaymentCancelled from "../Pages/Dashboard.jsx/PaymentCancelled";
 import MyProfile from "../Pages/Dashboard.jsx/MyProfile/MyProfile";
 import MyApplications from "../Pages/Dashboard.jsx/UserPages/MyApplications";
 import MyReviews from "../Pages/Dashboard.jsx/UserPages/MyReviews";
+import ManageApplications from "../Pages/Dashboard.jsx/ModeratorPages/ManageApplications";
+import AllReviews from "../Pages/Dashboard.jsx/ModeratorPages/AllReviews";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
       {
         path: "my-profile",
         Component: MyProfile
+      },
+      //todo MODERATOR ALL PAGES ROUTES
+      {
+        path: "moderator/manage-applications",
+        Component: ManageApplications
+      },{
+        path: "moderator/all-reviews",
+        Component: AllReviews
       },
       //todo USER ALL PAGES ROUTES
       {

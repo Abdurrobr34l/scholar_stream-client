@@ -1,10 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router';
 import useAuth from '../Hooks/useAuth';
+import useUserRole from '../Hooks/useUserRole';
+import LoadingSpinner from './LoadingSpinner';
 
 const UserDropdownMenu = ({ user }) => {
   const { logOut } = useAuth()
-  const role = user?.role || "User";
+  const { role, loading } = useUserRole(user?.email);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
 
   return (
     <div className="dropdown dropdown-end">

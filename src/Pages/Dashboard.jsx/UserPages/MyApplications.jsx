@@ -125,6 +125,7 @@ const MyApplications = () => {
 
     try {
       await axiosSecure.post(`/reviews`, {
+        userId: user.uid, // <--- Add this
         scholarshipId: selectedApp?.scholarshipId,
         scholarshipName: selectedApp?.scholarshipName,
         universityName: selectedApp?.universityName,
@@ -140,6 +141,7 @@ const MyApplications = () => {
       toast.error("Failed to submit review");
     }
   };
+
 
   const modalBaseClass = "modal modal-bottom sm:modal-middle";
   const modalBoxClass = "modal-box bg-white rounded-2xl shadow-xl p-6 sm:p-8 font-inter text-primary";
@@ -309,7 +311,7 @@ const MyApplications = () => {
           </select>
 
           {/* Application Fees */}
-          {/* <input
+          <input
             type="number"
             className="input input-bordered w-full mb-4"
             placeholder="Application Fees"
@@ -320,7 +322,7 @@ const MyApplications = () => {
                 applicationFees: Number(e.target.value),
               }))
             }
-          /> */}
+          />
 
           <div className="modal-action">
             <button

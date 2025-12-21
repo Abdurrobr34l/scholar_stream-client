@@ -88,7 +88,7 @@ const MyProfile = () => {
 
         {/* Name, Email, Role */}
         <h2 className="text-2xl font-bold">{user?.displayName || "Anonymous User"}</h2>
-        <p className="text-md font-semibold text-accent mb-1">{role}</p>
+        <p className="text-md font-semibold text-accent-content mb-1">{role}</p>
         <p className="text-sm text-gray-600 mb-6">{user?.email}</p>
 
         {/* Role-specific Stats */}
