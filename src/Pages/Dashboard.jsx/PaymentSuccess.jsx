@@ -5,6 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 import { motion } from "framer-motion";
 import SecondaryButton from "../../Utilities/SecondaryButton";
 import PrimaryButton from "../../Utilities/PrimaryButton";
+import PageTitle from "../../Utilities/PageTitle";
 
 const PaymentSuccess = () => {
   const axiosSecure = useAxios();
@@ -39,6 +40,8 @@ const PaymentSuccess = () => {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.45 }}
     >
+      <PageTitle title="Payment Success" />
+
       <div className="sectionMargin sectionPadding flex flex-col items-center justify-center px-4 text-center rounded-xl bg-[#f8fafc] lg:w-[500px] lg:mx-auto">
         <h2 className="text-3xl font-bold text-success! mb-4">
           Payment Successful
@@ -71,15 +74,15 @@ const PaymentSuccess = () => {
         )}
 
         {/* Action Button */}
-         <div className="flex gap-3">
-        <PrimaryButton
-          buttonName="Go to All Scholarships"
-          path="/all-scholarships"
-        />
-        <SecondaryButton
-          buttonName="Go to My Applications"
-          path="/dashboard/my-applications"
-        />
+        <div className="flex gap-3">
+          <PrimaryButton
+            buttonName="Go to All Scholarships"
+            path="/all-scholarships"
+          />
+          <SecondaryButton
+            buttonName="Go to My Applications"
+            path="/dashboard/my-applications"
+          />
         </div>
       </div>
     </motion.div>

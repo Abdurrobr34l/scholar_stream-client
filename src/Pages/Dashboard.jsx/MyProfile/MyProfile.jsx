@@ -4,6 +4,7 @@ import useAxios from "../../../Hooks/useAxios";
 import useUserRole from "../../../Hooks/useUserRole";
 import { motion } from "framer-motion";
 import { ImProfile } from "react-icons/im";
+import PageTitle from "../../../Utilities/PageTitle";
 
 const MyProfile = () => {
   const { user } = useAuth();
@@ -69,6 +70,8 @@ const MyProfile = () => {
       transition={{ duration: 0.45 }}
       className="sectionMargin flex flex-col items-center justify-center px-4 lg:px-10"
     >
+<PageTitle title="My Profile"/>
+
       <div className="bg-[#f8fafc] rounded-xl shadow-md p-8 w-full max-w-3xl flex flex-col items-center text-center">
         {/* Profile Image */}
         <div className="avatar mb-4">

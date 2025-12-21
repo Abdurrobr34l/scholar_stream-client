@@ -7,13 +7,14 @@ import { ImProfile } from "react-icons/im";
 import useAuth from '../../Hooks/useAuth';
 import useUserRole from '../../Hooks/useUserRole';
 import LoadingSpinner from '../../Utilities/LoadingSpinner';
+import PageTitle from '../../Utilities/PageTitle';
 
 const DashboardSidebar = () => {
   const { user } = useAuth();
   const { role, loading } = useUserRole(user?.email);
 
   if (loading) {
-    return <LoadingSpinner/>;
+    return <LoadingSpinner />;
   }
 
   // Role Based Links
@@ -48,6 +49,9 @@ const DashboardSidebar = () => {
 
   return (
     <div className="drawer lg:drawer-open">
+
+      <PageTitle title="Dashboard"/>
+
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       {/* Navigation Bar */}

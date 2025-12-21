@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingSpinner from "../../../Utilities/LoadingSpinner";
+import PageTitle from "../../../Utilities/PageTitle";
 
 const MyApplications = () => {
   const { user } = useAuth();
@@ -150,6 +151,8 @@ const MyApplications = () => {
       viewport={{ once: true, amount: 0.3 }}
       className="sectionMargin px-4 lg:px-10"
     >
+      <PageTitle title="My Applications" />
+
       <h2 className="text-3xl font-bold mb-6">My Applications</h2>
 
       <div className="overflow-x-auto">

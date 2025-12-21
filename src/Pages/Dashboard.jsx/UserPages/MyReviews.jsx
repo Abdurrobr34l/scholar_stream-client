@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { FaEdit, FaTrash, FaStar } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import PageTitle from "../../../Utilities/PageTitle";
 
 const MyReviews = () => {
   const { user } = useAuth();
@@ -87,6 +88,8 @@ const MyReviews = () => {
       viewport={{ once: true, amount: 0.3 }}
       className="sectionMargin px-4 lg:px-10"
     >
+      <PageTitle title="My Reviews" />
+
       <h2 className="text-3xl font-bold mb-6">My Reviews</h2>
 
       <div className="overflow-x-auto rounded-lg shadow-md border border-gray-200 bg-white">

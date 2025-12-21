@@ -5,6 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 import { motion } from "framer-motion";
 import SecondaryButton from "../../Utilities/SecondaryButton";
 import PrimaryButton from "../../Utilities/PrimaryButton";
+import PageTitle from "../../Utilities/PageTitle";
 
 const PaymentCancelled = () => {
   const axiosSecure = useAxios();
@@ -35,6 +36,8 @@ const PaymentCancelled = () => {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.45 }}
     >
+      <PageTitle title="Payment Cancelled" />
+
       <div className="sectionMargin sectionPadding flex flex-col items-center justify-center px-4 text-center rounded-xl bg-[#f8fafc] lg:w-[500px] lg:mx-auto">
         <h2 className="text-3xl font-bold text-error! mb-4">
           Payment Failed
