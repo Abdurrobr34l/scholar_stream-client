@@ -22,10 +22,10 @@ const DashboardSidebar = () => {
       links: [
         // { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
         { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
-        { name: "Add Scholarship", icon: <FaPlusCircle />, path: "/dashboard/add-scholarship" },
-        { name: "Manage Scholarships", icon: <FaList />, path: "/dashboard/manage-scholarships" },
-        { name: "Manage Users", icon: <FaUsers />, path: "/dashboard/manage-users" },
-        { name: "Analytics", icon: <FaChartBar />, path: "/dashboard/analytics" },
+        { name: "Add Scholarship", icon: <FaPlusCircle />, path: "/dashboard/admin/add-scholarship" },
+        { name: "Manage Scholarships", icon: <FaList />, path: "/dashboard/admin/manage-scholarships" },
+        { name: "Manage Users", icon: <FaUsers />, path: "/dashboard/admin/manage-users" },
+        { name: "Analytics", icon: <FaChartBar />, path: "/dashboard/admin/analytics" },
       ],
     },
     Moderator: {
