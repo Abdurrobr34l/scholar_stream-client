@@ -17,12 +17,11 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 👇 NEW — to stop Firebase from auto-login after register
   const [preventAutoLogin, setPreventAutoLogin] = useState(false);
 
   // REGISTER
   const registerUser = (email, password) => {
-    setPreventAutoLogin(true); // prevent onAuthStateChanged auto login
+    setPreventAutoLogin(true);
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -54,7 +53,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (preventAutoLogin) {
-        // block auto-login after registration
         setUser(null);
         setLoading(false);
         return;
@@ -69,14 +67,14 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
-    setUser,   // 👈 NEW — allow manual control
+    setUser,
     loading,
     registerUser,
     signInUser,
     signInWithGoogle,
     logOut,
     updateUserProfile,
-    setPreventAutoLogin // 👈 NEW — needed for register page
+    setPreventAutoLogin
   };
 
   return (
