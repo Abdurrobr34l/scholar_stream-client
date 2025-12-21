@@ -7,7 +7,6 @@ import { ImProfile } from "react-icons/im";
 import useAuth from '../../Hooks/useAuth';
 import useUserRole from '../../Hooks/useUserRole';
 import LoadingSpinner from '../../Utilities/LoadingSpinner';
-import PageTitle from '../../Utilities/PageTitle';
 
 const DashboardSidebar = () => {
   const { user } = useAuth();
@@ -21,7 +20,7 @@ const DashboardSidebar = () => {
   const dashboardLinks = {
     Admin: {
       links: [
-        { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
+        // { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
         { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
         { name: "Add Scholarship", icon: <FaPlusCircle />, path: "/dashboard/add-scholarship" },
         { name: "Manage Scholarships", icon: <FaList />, path: "/dashboard/manage-scholarships" },
@@ -31,7 +30,7 @@ const DashboardSidebar = () => {
     },
     Moderator: {
       links: [
-        { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
+        // { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
         { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
         { name: "Manage Applications", icon: <FaClipboardList />, path: "/dashboard/manage-applications" },
         { name: "All Reviews", icon: <FaStar />, path: "/dashboard/all-reviews" },
@@ -39,7 +38,7 @@ const DashboardSidebar = () => {
     },
     Student: {
       links: [
-        { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
+        // { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
         { name: "My Profile", icon: <ImProfile />, path: "/dashboard/my-profile" },
         { name: "My Applications", icon: <FaClipboardList />, path: "/dashboard/my-applications" },
         { name: "My Reviews", icon: <FaStar />, path: "/dashboard/my-reviews" },
@@ -49,8 +48,6 @@ const DashboardSidebar = () => {
 
   return (
     <div className="drawer lg:drawer-open">
-
-      <PageTitle title="Dashboard"/>
 
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 

@@ -296,7 +296,7 @@ const MyApplications = () => {
 
           {/* Degree */}
           <select
-            className="select select-bordered w-full mb-3"
+            className="select select-bordered w-full mb-3 p-0! pl-4!"
             value={editData.degree}
             onChange={(e) =>
               setEditData((prev) => ({ ...prev, degree: e.target.value }))
@@ -309,7 +309,7 @@ const MyApplications = () => {
           </select>
 
           {/* Application Fees */}
-          <input
+          {/* <input
             type="number"
             className="input input-bordered w-full mb-4"
             placeholder="Application Fees"
@@ -320,7 +320,7 @@ const MyApplications = () => {
                 applicationFees: Number(e.target.value),
               }))
             }
-          />
+          /> */}
 
           <div className="modal-action">
             <button
