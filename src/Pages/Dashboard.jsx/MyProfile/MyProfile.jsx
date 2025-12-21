@@ -5,6 +5,7 @@ import useUserRole from "../../../Hooks/useUserRole";
 import { motion } from "framer-motion";
 import { ImProfile } from "react-icons/im";
 import PageTitle from "../../../Utilities/PageTitle";
+import LoadingSpinner from "../../../Utilities/LoadingSpinner";
 
 const MyProfile = () => {
   const { user } = useAuth();
@@ -60,7 +61,7 @@ const MyProfile = () => {
     fetchStats();
   }, [user, role, axiosSecure]);
 
-  if (loading) return <span className="loading loading-spinner loading-lg"></span>;
+  if (loading) return <LoadingSpinner/>
 
   return (
     <motion.div

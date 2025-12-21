@@ -15,6 +15,7 @@ import MyReviews from "../Pages/Dashboard.jsx/UserPages/MyReviews";
 import ManageApplications from "../Pages/Dashboard.jsx/ModeratorPages/ManageApplications";
 import AllReviews from "../Pages/Dashboard.jsx/ModeratorPages/AllReviews";
 import ManageUsers from "../Pages/Dashboard.jsx/AdminPages/ManageUsers";
+import ManageScholarships from "../Pages/Dashboard.jsx/AdminPages/ManageScholarships";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
       },
 
       //todo ADMIN ALL PAGES ROUTES
+      {
+        path: "admin/manage-scholarships",
+        Component: ManageScholarships
+      },
       {
         path: "admin/manage-users",
         Component: ManageUsers

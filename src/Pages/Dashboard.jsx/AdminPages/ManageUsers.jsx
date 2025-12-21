@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import PageTitle from "../../../Utilities/PageTitle";
 import SectionTitle from '../../../Utilities/SectionTitle';
 import { motion } from "framer-motion";
+import LoadingSpinner from '../../../Utilities/LoadingSpinner';
 
 const ManageUsers = () => {
   const axiosSecure = useAxios();
@@ -48,7 +49,7 @@ const ManageUsers = () => {
     }
   };
 
-  if (isLoading) return <span className="loading loading-spinner loading-lg"></span>;
+  if (isLoading) return <LoadingSpinner/>
 
   return (
     <motion.div
