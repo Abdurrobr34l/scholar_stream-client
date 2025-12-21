@@ -17,6 +17,7 @@ import AllReviews from "../Pages/Dashboard.jsx/ModeratorPages/AllReviews";
 import ManageUsers from "../Pages/Dashboard.jsx/AdminPages/ManageUsers";
 import ManageScholarships from "../Pages/Dashboard.jsx/AdminPages/ManageScholarships";
 import AddScholarship from "../Pages/Dashboard.jsx/AdminPages/AddScholarship";
+import Analytics from "../Pages/Dashboard.jsx/AdminPages/Analytics";
 
 export const router = createBrowserRouter([
   //* HOMEPAGE ROUTES
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "admin/manage-users",
         Component: ManageUsers
+      },
+      {
+        path: "admin/analytics",
+        Component: Analytics
       },
 
       //todo MODERATOR ALL PAGES ROUTES

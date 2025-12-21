@@ -86,7 +86,7 @@ const MyReviews = () => {
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      className="sectionMargin px-4 lg:px-10"
+      className="sectionMargin lg:px-10"
     >
       <PageTitle title={`My Reviews ${reviews.length}`} />
 

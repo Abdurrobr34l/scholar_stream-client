@@ -70,7 +70,7 @@ const AddScholarship = () => {
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="sectionMargin px-4 lg:px-10"
+      className="sectionMargin lg:px-10"
     >
       <PageTitle title="Add Scholarship" />
       <SectionTitle sectionName="Add New Scholarship" />
