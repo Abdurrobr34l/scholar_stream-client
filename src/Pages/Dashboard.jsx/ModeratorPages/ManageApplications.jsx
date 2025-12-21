@@ -73,7 +73,7 @@ const ManageApplications = () => {
                 <td className="whitespace-nowrap">
                   <select
                     value={application.applicationStatus}
-                    className="select select-sm w-full max-w-[120px]"
+                    className="select select-sm w-full max-w-[140px] p-0! pl-4! h-10"
                     onChange={(e) => updateStatus(application._id, e.target.value)}
                   >
                     <option value="processing">Processing</option>
@@ -83,7 +83,7 @@ const ManageApplications = () => {
                 </td>
                 <td className="whitespace-nowrap">
                   <span
-                    className={`badge ${application.paymentStatus === "paid" ? "badge-success" : "badge-error"}`}
+                    className={`badge p-3 rounded-full capitalize text-white ${application.paymentStatus === "paid" ? "badge-success" : "badge-error"}`}
                   >
                     {application.paymentStatus}
                   </span>
@@ -137,7 +137,7 @@ const ManageApplications = () => {
             onChange={(e) => setFeedback(e.target.value)}
           />
           <div className="modal-action">
-            <button className="btn btn-accent" onClick={submitFeedback}>
+            <button className="btn btn-accent text-white" onClick={submitFeedback}>
               Submit
             </button>
             <button

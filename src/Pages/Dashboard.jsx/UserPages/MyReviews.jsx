@@ -88,7 +88,7 @@ const MyReviews = () => {
       viewport={{ once: true, amount: 0.3 }}
       className="sectionMargin px-4 lg:px-10"
     >
-      <PageTitle title="My Reviews" />
+      <PageTitle title={`My Reviews ${reviews.length}`} />
 
       <h2 className="text-3xl font-bold mb-6">My Reviews</h2>
 

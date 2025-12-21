@@ -125,7 +125,7 @@ const MyApplications = () => {
 
     try {
       await axiosSecure.post(`/reviews`, {
-        userId: user.uid, // <--- Add this
+        userId: user.uid,
         scholarshipId: selectedApp?.scholarshipId,
         scholarshipName: selectedApp?.scholarshipName,
         universityName: selectedApp?.universityName,
@@ -153,7 +153,8 @@ const MyApplications = () => {
       viewport={{ once: true, amount: 0.3 }}
       className="sectionMargin px-4 lg:px-10"
     >
-      <PageTitle title="My Applications" />
+      <PageTitle title={`My Applications ${applications.length}`} />
+
 
       <h2 className="text-3xl font-bold mb-6">My Applications</h2>
 
@@ -184,17 +185,22 @@ const MyApplications = () => {
                 <td>${app.applicationFees}</td>
                 <td>
                   <span
-                    className={`badge flex flex-col my-2 ${app.applicationStatus === "pending"
-                      ? "badge-warning"
-                      : app.applicationStatus === "submitted"
-                        ? "badge-info"
-                        : "badge-success"
-                      }`}
+                    className={`badge flex flex-col my-2 p-3 rounded-full capitalize text-white 
+                      ${
+                        app.applicationStatus === "pending"
+                        ? "badge-warning"
+                        : app.applicationStatus === "submitted"
+                          ? "badge-info"
+                          : app.applicationStatus === "rejected"
+                            ? "badge-warning"
+                            : "badge-success"
+                      }
+                      `}
                   >
                     {app.applicationStatus}
                   </span>
                   {app.paymentStatus === "unpaid" && (
-                    <span className="badge badge-error ml-1">Unpaid</span>
+                    <span className="badge badge-error ml-1 p-3 rounded-full capitalize text-white">Unpaid</span>
                   )}
                 </td>
                 <td className="flex flex-wrap gap-2">
@@ -233,7 +239,7 @@ const MyApplications = () => {
                       className="btn btn-accent btn-sm"
                       onClick={() => openReviewModal(app)}
                     >
-                      <FaStar />
+                      <FaStar className="text-primary" />
                     </button>
                   )}
                 </td>
