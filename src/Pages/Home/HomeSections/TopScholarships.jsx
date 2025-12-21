@@ -52,7 +52,7 @@ const TopScholarships = () => {
 
                 {/* Fee*/}
                 <div className="border-t border-dashed border-slate-300 pt-4 grid grid-cols-2 gap-y-2 text-sm">
-                  <h4 className="text-xl font-semibold">Fee: <span className="text-accent">{applicationFees}</span></h4>
+                  <h4 className="text-xl font-semibold">Fee: <span className="text-accent-content">{applicationFees}</span></h4>
                 </div>
 
                 {/* Description */}
