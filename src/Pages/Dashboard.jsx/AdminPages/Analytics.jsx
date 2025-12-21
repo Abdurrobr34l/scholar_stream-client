@@ -36,7 +36,7 @@ const Analytics = () => {
   });
 
   if (statsLoading || chartLoading) {
-    return <LoadingSpinner/>
+    return <LoadingSpinner />
   }
 
   return (
@@ -75,11 +75,18 @@ const Analytics = () => {
       {/* Chart */}
       <SectionTitle sectionName="Applications by Scholarship Category" />
 
-      <div className="bg-white rounded-xl shadow p-6 h-[350px]">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="bg-white rounded-xl shadow p-12 h-[350px]">
+        <ResponsiveContainer width="100%" height="110%">
           <BarChart data={chartData}>
-            <XAxis dataKey="_id" />
-            <YAxis />
+            <XAxis
+              dataKey="_id"
+              tick={{ fontSize: 14 }}
+              label={{ value: "Scholarship Category", position: "insideBottom", offset: -6 }}
+            />
+            <YAxis
+              allowDecimals={false}
+              label={{ value: "Applications", angle: -90, position: "insideLeft" }}
+            />
             <Tooltip />
             <Bar dataKey="count" fill="#0f172a" />
           </BarChart>

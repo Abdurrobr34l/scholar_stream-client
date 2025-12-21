@@ -61,7 +61,7 @@ const MyProfile = () => {
     fetchStats();
   }, [user, role, axiosSecure]);
 
-  if (loading) return <LoadingSpinner/>
+  if (loading || !role) return <LoadingSpinner />
 
   return (
     <motion.div
