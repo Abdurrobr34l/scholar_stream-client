@@ -1,6 +1,6 @@
 # Scholar Stream
 
-**Live URL :** 
+**Live URL :  https://scholarships-stream.netlify.app/all-scholarships** 
 
 ---
 
