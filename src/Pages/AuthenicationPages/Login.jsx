@@ -16,6 +16,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       await signInUser(data.email, data.password);
+
       toast.success('Logged successful!');
       navigate('/');
     } catch (error) {

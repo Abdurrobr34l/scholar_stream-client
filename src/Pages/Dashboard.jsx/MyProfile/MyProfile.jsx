@@ -19,6 +19,8 @@ const MyProfile = () => {
     totalScholarships: 0,
   });
 
+  // console.log(user.accessToken);
+
   useEffect(() => {
     if (!user?.email || !role) return;
 
